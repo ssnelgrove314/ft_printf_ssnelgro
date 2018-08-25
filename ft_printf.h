@@ -6,21 +6,16 @@
 
 typedef struct      printf_struct_s
 {
+    char *format;
+    va_list ap;
     char conv_spec;
-    char precision;
+    int precision;
     char length;
-    char width;
+    int width;
     char *flags;
     char *func_ret;
+    char *output;
 }                   printf_struct_t;
-
-typedef struct printf_io_s
-{
-    char *format;
-    char *ret;
-    va_list ap;
-    printf_struct_t **info;
-}               printf_io_t;
 
 typedef printf_struct_t *ft_printf_func(printf_struct_t *iprints);
 
@@ -59,9 +54,6 @@ const ft_printf_dispatch_t printf_dispatch[] =
 int ft_printf(const char *format, ...);
 int ft_vasprintf(char **ret, const char *format, va_list ap);
 int ft_printf_parser(char **ret, const char *format, va_list ap);
-
-
-printf_io_t *init_printf_io(char **ret, const char *format, va_list ap);
 
 // int ft_vprintf(const char *format, va_list ap, ...);
 // int ft_sprintf(char *buffer, const char format, ...);

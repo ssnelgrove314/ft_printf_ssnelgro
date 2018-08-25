@@ -1,24 +1,58 @@
 #include "ft_printf.h"
 
-int ft_printf_parser(char **ret, const char *format, va_list ap)
+void pf_parse_format_str(printf_struct_t *local)
 {
-    printf_io_t *pfdata;
+    char *tmp;
 
-    pfdata = init_printf_io(ret, format, ap);
-    
+    tmp = local->format;
+    while (tmp)
+    {
+        tmp = ft_strchr(tmp, '%');
+        tmp++;
+        tmp = pf_parse_after_perc(local, tmp);
+
+    }
 
 }
 
-printf_io_t *init_printf_io(char **ret, const char *format, va_list ap)
+int ft_printf_parser(char **ret, const char *format, va_list ap)
 {
-    printf_io_t *pfdata;
+    printf_struct_t local;
 
-    if((pfdata = (printf_io_t *)malloc(sizeof(printf_io_t *))) == NULL)
-        return (NULL);
-    *ret = pfdata->ret;
-    pfdata->format = ft_strdup(format);
-    va_copy(ap, pfdata->ap);
-    pfdata->info = printf_spec_fmt_list(pfdata);
+    local.format = (char *)format;
+    va_copy(local.ap, ap);
+    local.output = ft_strnew(0);
+    pf_parse_format_str(&local);
+    *ret = ft_strdup(local.output);
+    return (ft_strlen(*ret));
+}
 
-    return (pfdata);
+
+
+
+printf_struct_t **printf_spec_fmt_list(printf_io_t *pfdata)
+{
+    char *fmt;
+    printf_struct_t *tmp;
+
+    fmt = pfdata->format++;
+    while ((fmt = ft_strchr(fmt, '%')) != NULL)
+    {
+        if (!pfdata->info)
+            pfdata->info = (printf_struct_t **)ft_memalloc(sizeof(printf_struct_t) * pf_count_specifiers(fmt));
+        while (pf_valid_char(fmt))
+        {
+            if ()
+
+            fmt++;
+        }
+        tmp = (printf_struct_t *)ft_memalloc(sizeof(printf_struct_t));
+        if (*fmt == specifier)
+            tmp->conv_spec = *fmt;
+        if(*fmt == length)
+        if(ft_isdigit(*fmt))
+        if(*fmt == '.')
+        if (fmt_isdigit(*fmt))
+        if (fmt_flags)
+    }
 }
