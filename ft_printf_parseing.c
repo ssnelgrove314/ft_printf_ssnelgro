@@ -44,9 +44,8 @@ int pf_parse_format_str(printf_struct_t *local)
 				local->format++;
 			}
 		if (!valid_arg(local->conv_spec) && local->width)
-			ft_vector
 	}
-
+https://github.com/eliasgoodale/libft/blob/cb386b4e3faeb0d9429e0b4eccbd77241e93d66b/ft_printf/parse_args.c
 }
 char *get_next_arg(printf_struct_t *local)
 {
