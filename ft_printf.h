@@ -4,9 +4,11 @@
 # include "../libft/libft.h"
 # include <stdarg.h>
 
+# define MAX_FORMATS 11
 typedef struct      printf_struct_s
 {
     char *format;
+    size_t fmt_c;
     va_list ap;
     char conv_spec;
     int precision;
@@ -14,7 +16,7 @@ typedef struct      printf_struct_s
     int width;
     char *flags;
     char *func_ret;
-    char *output;
+	t_vector *output;
 }                   printf_struct_t;
 
 typedef printf_struct_t *ft_printf_func(printf_struct_t *iprints);
