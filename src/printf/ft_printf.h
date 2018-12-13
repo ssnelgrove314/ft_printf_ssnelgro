@@ -61,13 +61,5 @@ void	spec_signed_int(t_printf *prtf, va_list arg);
 void	spec_octal(t_printf *prtf, va_list arg);
 
 //csdioxXufFeEaAgGnp
-static t_printf_spec		g_spec[19] = {
-	{'%', &spec_percentage},
-	{'c', &spec_char},
-	{'s', &spec_string},
-	{'d', &spec_signed_int},
-	{'i', &spec_signed_int},
-	{'o', &spec_octal},
-};
 
 #endif
