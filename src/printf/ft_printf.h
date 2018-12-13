@@ -41,7 +41,7 @@ typedef void	(*t_spec_func)(t_printf *prtf, va_list arg);
 
 typedef struct	s_printf_spec
 {
-	char			*spec;
+	char			spec;
 	t_spec_func		func;
 }				t_printf_spec;
 
