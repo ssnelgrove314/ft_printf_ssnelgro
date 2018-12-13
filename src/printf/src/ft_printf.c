@@ -37,26 +37,25 @@ void	printf_parse_after_percent(t_printf *prtf, va_list arg)
 	printf_get_flags(prtf, arg);
 	printf_get_widthcision(prtf, arg);
 	printf_get_length(prtf, arg);
+	printf_get_spec(prtf, arg);
 }
 
 void printf_get_flags(t_printf *prtf, va_list arg)
 {
-	char *flags;
 
-	
 }
 
 void printf_get_widthcision(t_printf *prtf, va_list arg)
 {
-	char *flags;
 
-	flags = " -+#0";
 }
 
 void printf_get_length(t_printf *prtf, va_list arg)
 {
-	char *flags;
 
-	flags = " -+#0";
+}
+
+void printf_get_spec(t_printf *prtf, va_list arg)
+{
 
 }

@@ -37,11 +37,37 @@ typedef struct		s_printf
 	t_printf_args	args;
 }					t_printf;
 
+typedef void	(*t_spec_func)(t_printf *prtf, va_list arg);
+
+typedef struct	s_printf_spec
+{
+	char			*spec;
+	t_spec_func		func;
+}				t_printf_spec;
+
 int		ft_printf(const char *format, ...);
 int		ft_vfprintf(FILE *stream, const char *format, va_list arg);
 void	printf_parse_after_percent(t_printf *prtf, va_list arg);
 void	printf_get_flags(t_printf *prtf, va_list arg);
 void	printf_get_widthcision(t_printf *prtf, va_list arg);
 void	printf_get_length(t_printf *prtf, va_list arg);
+void	printf_get_spec(t_printf *prtf, va_list arg);
+
+//Append the result to the vector
+void	spec_percentage(t_printf *prtf, va_list arg);
+void	spec_char(t_printf *prtf, va_list arg);
+void	spec_string(t_printf *prtf, va_list arg);
+void	spec_signed_int(t_printf *prtf, va_list arg);
+void	spec_octal(t_printf *prtf, va_list arg);
+
+//csdioxXufFeEaAgGnp
+static t_printf_spec		g_spec[19] = {
+	{'%', &spec_percentage},
+	{'c', &spec_char},
+	{'s', &spec_string},
+	{'d', &spec_signed_int},
+	{'i', &spec_signed_int},
+	{'o', &spec_octal},
+};
 
 #endif
