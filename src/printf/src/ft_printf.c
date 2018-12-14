@@ -1,5 +1,4 @@
 #include "../ft_printf.h"
-# define CMP(x,y)(x == y)
 
 /*
 ** Function: ft_printf
@@ -38,29 +37,36 @@ int		ft_vprintf(FILE *stream, const char *format, va_list arg)
 	t_printf	prtf;
 	char		*tmp;
 	int			fd;
+	int			ret;
 
 	//This shit needs some error checking :P
 	prtf.fmt = (char *)format;
-	ft_vector_init(&(prtf.output), ft_strlen(format));
+	prtf.format = prtf.fmt;
+	prtf.output = ft_memalloc(sizeof(*(prtf.output)));
+	ft_vector_init(prtf.output, ft_strlen(format));
 	while ((tmp = ft_strchr(prtf.fmt, '%')) != NULL)
 	{
-		ft_vector_nappend(&(prtf.output), prtf.fmt, (tmp - prtf.fmt));
+		ft_vector_nappend(prtf.output, prtf.fmt, (tmp - prtf.fmt));
 		prtf.fmt = tmp;
 		printf_parse_after_percent(&prtf, arg);
 	}
-	ft_vector_append(&(prtf.output), prtf.fmt);
-	write(stream->_fileno, &(prtf.output), prtf.output.len);
-	return (prtf.output.len);
+	ft_vector_append(prtf.output, prtf.fmt);
+	write(stream->_fileno, &(prtf.output), prtf.output->len);
+	ret = prtf.output->len;
+	ft_vector_free(prtf.output);
+	free(prtf.output);
+	return (ret);
 }
 
 /*
 ** Description: Contains the functions needed to parse
 ** the format string.
+** %[flags][width][.precision][length]specifier
 */
 
 void	printf_parse_after_percent(t_printf *prtf, va_list arg)
 {
-	//%[flags][width][.precision][length]specifier
+	prtf->start_spec = prtf->fmt;
 	printf_get_flags(prtf, arg);
 	printf_get_widthcision(prtf, arg);
 	printf_get_length(prtf, arg);
@@ -79,17 +85,17 @@ void	printf_get_flags(t_printf *prtf, va_list arg)
 		if (!(tmp = ft_strchr(flags, *prtf->fmt)))
 			return ;
 		if (CMP(*tmp, flags[0]))
-			prtf->args.flags.left_just++;
+			prtf->args.flags.left_just += 1;
 		if (CMP(*tmp, flags[1]))
-			prtf->args.flags.prepend_sign_of_sign_conversions++;
+			prtf->args.flags.prepend_sign_of_sign_conversions += 1;
 		if (CMP(*tmp, flags[2]))
-			prtf->args.flags.prepend_space++;
+			prtf->args.flags.prepend_space += 1;
 		if (CMP(*tmp, flags[3]))
-			prtf->args.flags.alt_form++;
+			prtf->args.flags.alt_form += 1;
 		if (CMP(*tmp, flags[4]))
-			prtf->args.flags.pad_zeros++;
+			prtf->args.flags.pad_zeros += 1;
 	}
-	//parse error
+	return ;
 }
 
 void printf_get_widthcision(t_printf *prtf, va_list arg)
@@ -106,15 +112,13 @@ void printf_get_widthcision(t_printf *prtf, va_list arg)
 		{
 			prtf->fmt++;
 			if (ft_isdigit(*prtf->fmt))
-			{/
+			{
 				prtf->args.precision = ft_atoi(prtf->fmt);
-				prtf->fmt += ft_numlen(prtf->args.width);
+				prtf->fmt += ft_numlen(prtf->args.precision);
 			}
-			//error
 		}
 		return ;
 	}
-	//parse error
 }
 
 void printf_get_length(t_printf *prtf, va_list arg)
@@ -173,5 +177,5 @@ void printf_get_spec(t_printf *prtf, va_list arg)
 			g_spec[i].func(prtf, arg);
 			return ;
 		}
-	//parse error
+	ft_printf_error(prtf->start_spec, INVALID_SPEC);
 }
