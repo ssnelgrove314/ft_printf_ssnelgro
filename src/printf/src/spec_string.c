@@ -1,12 +1,14 @@
 #include "../ft_printf.h"
 
-void	spec_char(t_printf *prtf, va_list arg)
+void	format_str(t_printf *prtf, t_vector *output)
+{
+	
+}
+
+void	spec_string(t_printf *prtf, va_list arg)
 {
 	t_vector output;
 
-	if (prtf->args.widthcision & PF_PRECISION_SET)
-		ft_printf_error(prtf->start_spec, INVALID_SPEC);
-	ft_vector_init(&output, prtf->args.width + 2);
 	if (prtf->args.length & PF_L)
 	{
 		prtf->args.val.wide_char = va_arg(arg, wchar_t *);
@@ -14,10 +16,10 @@ void	spec_char(t_printf *prtf, va_list arg)
 	}
 	else
 	{
-		prtf->args.val.signed_char = va_arg(arg, int);
+		prtf->args.val.str = va_arg(arg, char *);
 		ft_vector_nappend(&output, &prtf->args.val.signed_char, 1);
 	}
-	handle_width(prtf, &output);
 	ft_vector_nappend(prtf->output, output.data, output.len);
+	format_str(prtf, &output);
 	ft_vector_free(&output);
 }

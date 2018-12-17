@@ -85,37 +85,42 @@ void	printf_get_flags(t_printf *prtf, va_list arg)
 		if (!(tmp = ft_strchr(flags, *prtf->fmt)))
 			return ;
 		if (CMP(*tmp, flags[0]))
-			prtf->args.flags.left_just += 1;
+			prtf->args.flags |= LEFT_JUST;
 		if (CMP(*tmp, flags[1]))
-			prtf->args.flags.prepend_sign_of_sign_conversions += 1;
+			prtf->args.flags |= PREPEND_SIGN;
 		if (CMP(*tmp, flags[2]))
-			prtf->args.flags.prepend_space += 1;
+			prtf->args.flags |= PREPEND_SIGN;
 		if (CMP(*tmp, flags[3]))
-			prtf->args.flags.alt_form += 1;
+			prtf->args.flags |= ALT_FORM;
 		if (CMP(*tmp, flags[4]))
-			prtf->args.flags.pad_zeros += 1;
+			prtf->args.flags |= PAD_ZEROS;
 	}
 	return ;
 }
 
 void printf_get_widthcision(t_printf *prtf, va_list arg)
 {
-	//this isn't right;
 	while (++prtf->fmt != '\0')
 	{
 		if (ft_isdigit(*prtf->fmt))
 		{
 			prtf->args.width = ft_atoi(prtf->fmt);
+			prtf->args.widthcision |= PF_WIDTH_SET;
 			prtf->fmt += ft_numlen(prtf->args.width);
 		}
+		else if (*prtf->fmt == '*')
+			prtf->args.widthcision |= (PF_WIDTH_ASTERISK | PF_WIDTH_SET);
 		if (CMP(*prtf->fmt, '.'))
 		{
 			prtf->fmt++;
 			if (ft_isdigit(*prtf->fmt))
 			{
 				prtf->args.precision = ft_atoi(prtf->fmt);
+				prtf->args.widthcision |= PF_PRECISION_SET;
 				prtf->fmt += ft_numlen(prtf->args.precision);
 			}
+			else if (*prtf->fmt == '*')
+				prtf->args.widthcision |= (PF_PRECISION_ASTERISK | PF_PRECISION_SET);
 		}
 		return ;
 	}
@@ -130,23 +135,23 @@ void printf_get_length(t_printf *prtf, va_list arg)
 			if (prtf->fmt[1] == 'l')
 			{
 				prtf->fmt++;
-				prtf->args.length.pf_ll += 1;
+				prtf->args.length |= PF_LL;
 			}
 			else
-				prtf->args.length.pf_l += 1;
+				prtf->args.length |= PF_L;
 		}
 		else if (*prtf->fmt == 'h')
 		{
 			if (prtf->fmt[1] == 'h')
 			{
 				prtf->fmt++;
-				prtf->args.length.pf_hh += 1;
+				prtf->args.length |= PF_HH;
 			}
 			else
-				prtf->args.length.pf_h += 1;
+				prtf->args.length |= PF_H;
 		}
 		else if (*prtf->fmt == 'z')
-			prtf->args.length.pf_z += 1;
+			prtf->args.length |= PF_Z;
 		else
 			return ;
 	}
