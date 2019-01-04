@@ -20,11 +20,11 @@
 			},
 			"osx" : {
 				"MIMode" : "lldb",
-				"miDebuggerPath": "/usr/bin/lldb"
+				// "miDebuggerPath": "/usr/bin/lldb"
 			},
 
 
-            "args": [],
+            "args": ["%c hello", "a"],
             "cwd": "${workspaceFolder}",
 			"externalConsole": false,
 			// "environment": [{"DEBUG" : "TRUE"}],

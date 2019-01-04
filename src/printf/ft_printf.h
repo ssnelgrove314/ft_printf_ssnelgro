@@ -8,6 +8,10 @@
 
 # define CMP(x,y)(x == y)
 
+typedef struct			s_helper_file
+{
+	struct				_IO_FILE_plus
+}
 typedef union			s_printf_val
 {
 	void				*void_ptr;
@@ -100,6 +104,7 @@ typedef struct s_printf_args
 	int				precision;
 	uint8_t			length;
 	char			spec;
+	va_list			arg;
 	t_printf_val	val;
 }					t_printf_args;
 
@@ -121,7 +126,7 @@ typedef struct	s_printf_spec
 }				t_printf_spec;
 
 int		ft_printf(const char *format, ...);
-int		ft_vprintf(FILE *stream, const char *format, va_list arg);
+int		ft_vprintf(const char *format, va_list arg);
 
 void	printf_parse_after_percent(t_printf *prtf, va_list arg);
 void	printf_get_flags(t_printf *prtf);

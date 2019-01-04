@@ -3,7 +3,6 @@
 
 int main(int argc, char const *argv[])
 {
-	printf("%c hello", 'a');
-	ft_printf("%c hello", 'a');
+	ft_printf(argv[1], argv[2]);
 	return (0);
 }

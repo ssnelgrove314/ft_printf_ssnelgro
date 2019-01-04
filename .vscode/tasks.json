@@ -7,7 +7,7 @@
 			"label": "Build",
 			"type": "shell",
 			"isBackground": true,
-			"command": "make",
+			"command": "${workspaceFolder}/.vscode/scripts/ft_printf_build_script.sh",
 			"group": {
 				"kind": "build",
 				"isDefault": true

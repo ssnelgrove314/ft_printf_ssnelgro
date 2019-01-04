@@ -7,6 +7,7 @@ int ft_fopen(const char *filename, const char *mode)
 {
     int fd;
 
+    fd = 0;
     if (ft_strcmp("r", mode) == 0)
         fd = open(filename, O_RDONLY);
     else if (ft_strcmp("w", mode) == 0)

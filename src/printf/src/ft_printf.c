@@ -12,12 +12,12 @@
 
 int					ft_printf(const char *format, ...)
 {
-	va_list		args;
+	va_list		arg;
  	int			ret;
 
-	va_start(args, format);
-	ret = ft_vprintf(stdout, format, args);
-	va_end(args);
+	va_start(arg, format);
+	ret = ft_vprintf(format, arg);
+	va_end(arg);
 	return (ret);
 }
 
@@ -32,7 +32,7 @@ int					ft_printf(const char *format, ...)
 ** output vector until there are no more '%' to parse.
 */
 
-int		ft_vprintf(FILE *stream, const char *format, va_list arg)
+int		ft_vprintf(const char *format, va_list arg)
 {
 	t_printf	prtf;
 	char		*tmp;
@@ -51,7 +51,7 @@ int		ft_vprintf(FILE *stream, const char *format, va_list arg)
 		printf_parse_after_percent(&prtf, arg);
 	}
 	ft_vector_append(prtf.output, prtf.fmt);
-	write(stream->_fileno, &(prtf.output), prtf.output->len);
+	write(STDOUT_FILENO, &(prtf.output), prtf.output->len);
 	ret = prtf.output->len;
 	ft_vector_free(prtf.output);
 	free(prtf.output);
@@ -67,6 +67,7 @@ int		ft_vprintf(FILE *stream, const char *format, va_list arg)
 void	printf_parse_after_percent(t_printf *prtf, va_list arg)
 {
 	prtf->start_spec = prtf->fmt;
+	prtf->fmt += 1;
 	printf_get_flags(prtf);
 	printf_get_widthcision(prtf);
 	printf_get_length(prtf);
@@ -76,32 +77,30 @@ void	printf_parse_after_percent(t_printf *prtf, va_list arg)
 void	printf_get_flags(t_printf *prtf)
 {
 	char	*flags;
-	char	*tmp;
-	// char	fc;
 
 	flags = "-+ #0";
-	prtf->fmt += 1;
-	if (prtf->fmt)
+	while (prtf->fmt)
 	{
-		if (!(tmp = ft_strchr(flags, *prtf->fmt)))
-			return ;
-		if (CMP(*tmp, flags[0]))
+		if (CMP(*prtf->fmt, flags[0]))
 			prtf->args.flags |= LEFT_JUST;
-		if (CMP(*tmp, flags[1]))
+		else if (CMP(*prtf->fmt, flags[1]))
 			prtf->args.flags |= PREPEND_SIGN;
-		if (CMP(*tmp, flags[2]))
+		else if (CMP(*prtf->fmt, flags[2]))
 			prtf->args.flags |= PREPEND_SIGN;
-		if (CMP(*tmp, flags[3]))
+		else if (CMP(*prtf->fmt, flags[3]))
 			prtf->args.flags |= ALT_FORM;
-		if (CMP(*tmp, flags[4]))
+		else if (CMP(*prtf->fmt, flags[4]))
 			prtf->args.flags |= PAD_ZEROS;
+		else
+			return ;
+		prtf->fmt += 1;
 	}
 	return ;
 }
 
 void printf_get_widthcision(t_printf *prtf)
 {
-	while (++prtf->fmt != NULL)
+	while (prtf->fmt)
 	{
 		if (ft_isdigit(*prtf->fmt))
 		{
@@ -111,6 +110,8 @@ void printf_get_widthcision(t_printf *prtf)
 		}
 		else if (*prtf->fmt == '*')
 			prtf->args.widthcision |= (PF_WIDTH_ASTERISK | PF_WIDTH_SET);
+		else
+			return ;
 		if (CMP(*prtf->fmt, '.'))
 		{
 			prtf->fmt++;
@@ -129,7 +130,7 @@ void printf_get_widthcision(t_printf *prtf)
 
 void printf_get_length(t_printf *prtf)
 {
-	while (++prtf->fmt != NULL)
+	while (prtf->fmt)
 	{
 		if (*prtf->fmt == 'l')
 		{

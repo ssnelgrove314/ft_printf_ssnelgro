@@ -8,7 +8,6 @@ SRC		:=	$(wildcard src/mem/*.c) \
 			$(wildcard src/string/*.c) \
 			$(wildcard src/io/*.c) \
 			$(wildcard src/math/*.c) \
-			$(wildcard src/list/*.c) \
 			$(wildcard src/ctype/*.c) \
 			$(wildcard src/vector/*.c) \
 			$(wildcard src/stdlib/*.c) \
