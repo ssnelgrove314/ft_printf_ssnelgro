@@ -17,7 +17,7 @@ void	spec_char(t_printf *prtf, va_list arg)
 		prtf->args.val.signed_char = va_arg(arg, int);
 		ft_vector_nappend(&output, &prtf->args.val.signed_char, 1);
 	}
-	handle_width(prtf, &output);
+	// handle_width(prtf, &output);
 	ft_vector_nappend(prtf->output, output.data, output.len);
 	ft_vector_free(&output);
 }

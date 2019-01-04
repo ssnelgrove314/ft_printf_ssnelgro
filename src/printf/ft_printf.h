@@ -4,6 +4,7 @@
 # include "../../libft.h"
 # include <wchar.h>
 # include <stddef.h>
+# include <stdarg.h>
 
 # define CMP(x,y)(x == y)
 
@@ -120,12 +121,12 @@ typedef struct	s_printf_spec
 }				t_printf_spec;
 
 int		ft_printf(const char *format, ...);
-int		ft_vfprintf(FILE *stream, const char *format, va_list arg);
+int		ft_vprintf(FILE *stream, const char *format, va_list arg);
 
 void	printf_parse_after_percent(t_printf *prtf, va_list arg);
-void	printf_get_flags(t_printf *prtf, va_list arg);
-void	printf_get_widthcision(t_printf *prtf, va_list arg);
-void	printf_get_length(t_printf *prtf, va_list arg);
+void	printf_get_flags(t_printf *prtf);
+void	printf_get_widthcision(t_printf *prtf);
+void	printf_get_length(t_printf *prtf);
 void	printf_get_spec(t_printf *prtf, va_list arg);
 
 //Append the result to the vector

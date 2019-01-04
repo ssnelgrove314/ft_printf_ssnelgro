@@ -16,7 +16,7 @@ int					ft_printf(const char *format, ...)
  	int			ret;
 
 	va_start(args, format);
-	ret = ft_vfprintf(stdout, format, args);
+	ret = ft_vprintf(stdout, format, args);
 	va_end(args);
 	return (ret);
 }
@@ -36,7 +36,7 @@ int		ft_vprintf(FILE *stream, const char *format, va_list arg)
 {
 	t_printf	prtf;
 	char		*tmp;
-	int			fd;
+	// int			fd;
 	int			ret;
 
 	//This shit needs some error checking :P
@@ -67,20 +67,21 @@ int		ft_vprintf(FILE *stream, const char *format, va_list arg)
 void	printf_parse_after_percent(t_printf *prtf, va_list arg)
 {
 	prtf->start_spec = prtf->fmt;
-	printf_get_flags(prtf, arg);
-	printf_get_widthcision(prtf, arg);
-	printf_get_length(prtf, arg);
+	printf_get_flags(prtf);
+	printf_get_widthcision(prtf);
+	printf_get_length(prtf);
 	printf_get_spec(prtf, arg);
 }
 
-void	printf_get_flags(t_printf *prtf, va_list arg)
+void	printf_get_flags(t_printf *prtf)
 {
 	char	*flags;
 	char	*tmp;
-	char	fc;
+	// char	fc;
 
 	flags = "-+ #0";
-	while (++prtf->fmt != '\0')
+	prtf->fmt += 1;
+	if (prtf->fmt)
 	{
 		if (!(tmp = ft_strchr(flags, *prtf->fmt)))
 			return ;
@@ -98,9 +99,9 @@ void	printf_get_flags(t_printf *prtf, va_list arg)
 	return ;
 }
 
-void printf_get_widthcision(t_printf *prtf, va_list arg)
+void printf_get_widthcision(t_printf *prtf)
 {
-	while (++prtf->fmt != '\0')
+	while (++prtf->fmt != NULL)
 	{
 		if (ft_isdigit(*prtf->fmt))
 		{
@@ -126,9 +127,9 @@ void printf_get_widthcision(t_printf *prtf, va_list arg)
 	}
 }
 
-void printf_get_length(t_printf *prtf, va_list arg)
+void printf_get_length(t_printf *prtf)
 {
-	while (++prtf->fmt != '\0')
+	while (++prtf->fmt != NULL)
 	{
 		if (*prtf->fmt == 'l')
 		{
@@ -171,10 +172,10 @@ void printf_get_spec(t_printf *prtf, va_list arg)
 	{
 		{'%', &spec_percentage},
 		{'c', &spec_char},
-		{'s', &spec_string},
-		{'d', &spec_signed_int},
-		{'i', &spec_signed_int},
-		{'o', &spec_octal},
+		// {'s', &spec_string},
+		// {'d', &spec_signed_int},
+		// {'i', &spec_signed_int},
+		// {'o', &spec_octal},
 	};
 	while (++i < 6)
 		if (CMP(*prtf->fmt, g_spec[i].spec))

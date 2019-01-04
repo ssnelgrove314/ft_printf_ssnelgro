@@ -6,7 +6,8 @@
 		{
 			"label": "Build",
 			"type": "shell",
-			"command": "make re",
+			"isBackground": true,
+			"command": "make",
 			"group": {
 				"kind": "build",
 				"isDefault": true

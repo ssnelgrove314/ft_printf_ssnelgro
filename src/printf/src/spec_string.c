@@ -2,7 +2,9 @@
 
 void	format_str(t_printf *prtf, t_vector *output)
 {
+	prtf->output = output; //delete this shit later:W
 	
+	return ;
 }
 
 void	spec_string(t_printf *prtf, va_list arg)

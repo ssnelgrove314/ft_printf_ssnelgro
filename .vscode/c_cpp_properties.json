@@ -4,26 +4,27 @@
             "${workspaceFolder}",
             "${workspaceFolder}/include"
         ],
-        "myCompilerPath": "/usr/local/bin/gcc-7"
+        "myCompilerPath": "/usr/local/bin/clang"
     },
     "configurations": [
         {
             "name": "Linux",
             "intelliSenseMode": "clang-x64",
             "includePath": [
-                "${myDefaultIncludePath}",
+                "${workspaceFolder}",
                 "/home/ssnelgrove/42/libft"
             ],
-            "macFrameworkPath": [
-                "/System/Library/Frameworks"
-            ],
-            "defines": [],
+            "defines": [
+				"_DEBUG",
+				"UNICODE"
+			],
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c11",
             "cppStandard": "c++17",
             "browse": {
                 "path": [
-                    "${workspaceFolder}"
+					"${workspaceFolder}",
+					"/home/ssnelgrove/42/libft"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""

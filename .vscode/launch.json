@@ -8,13 +8,28 @@
             "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/src/printf/src/a.out",
+            "program": "${workspaceFolder}/a.out",
+			"stopAtEntry": false,
+			// "customLaunchSetupCommands": [
+			// 	{ "text": "target-run", "description": "run target", "ignoreFailures": false }
+			// ],
+			// "launchCompleteCommand": "exec-run",
+			"linux" : {
+				"MIMode": "lldb",
+				// "miDebuggerPath": "/usr/bin/lldb",
+			},
+			"osx" : {
+				"MIMode" : "lldb",
+				"miDebuggerPath": "/usr/bin/lldb"
+			},
+
+
             "args": [],
-            "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": true,
-            "MIMode": "lldb",
+			"externalConsole": false,
+			// "environment": [{"DEBUG" : "TRUE"}],
+			// "setupCommands": [
+			// ]
         }
     ]
 }

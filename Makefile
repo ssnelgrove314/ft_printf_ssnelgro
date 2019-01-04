@@ -15,7 +15,7 @@ SRC		:=	$(wildcard src/mem/*.c) \
 			$(wildcard src/stack/*.c) \
 			$(wildcard src/queue/*.c) \
 			$(wildcard src/get_next_line/*.c) \
-			$(wildcard src/printf/src/*/*.c) \
+			$(wildcard src/printf/src/*.c) 
 
 OBJ = $(SRC:.c=.o)
 
