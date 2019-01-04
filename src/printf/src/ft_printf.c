@@ -36,7 +36,6 @@ int		ft_vprintf(const char *format, va_list arg)
 {
 	t_printf	prtf;
 	char		*tmp;
-	// int			fd;
 	int			ret;
 
 	//This shit needs some error checking :P
