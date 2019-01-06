@@ -8,10 +8,6 @@
 
 # define CMP(x,y)(x == y)
 
-typedef struct			s_helper_file
-{
-	struct				_IO_FILE_plus
-}
 typedef union			s_printf_val
 {
 	void				*void_ptr;
@@ -85,7 +81,8 @@ typedef enum
 	PF_H = 1 << 1,
 	PF_L = 1 << 2,
 	PF_LL = 1 << 3,
-	PF_Z = 1 << 4,
+	PF_J = 1 << 4,
+	PF_Z = 1 << 5,
 }e_pf_length;
 
 typedef enum
@@ -117,7 +114,7 @@ typedef struct		s_printf
 	t_printf_args	args;
 }					t_printf;
 
-typedef void	(*t_spec_func)(t_printf *prtf, va_list arg);
+typedef void	(*t_spec_func)(t_printf *prtf);
 
 typedef struct	s_printf_spec
 {
@@ -128,18 +125,18 @@ typedef struct	s_printf_spec
 int		ft_printf(const char *format, ...);
 int		ft_vprintf(const char *format, va_list arg);
 
-void	printf_parse_after_percent(t_printf *prtf, va_list arg);
+void	printf_parse_after_percent(t_printf *prtf);
 void	printf_get_flags(t_printf *prtf);
 void	printf_get_widthcision(t_printf *prtf);
 void	printf_get_length(t_printf *prtf);
-void	printf_get_spec(t_printf *prtf, va_list arg);
+void	printf_get_spec(t_printf *prtf);
 
 //Append the result to the vector
-void	spec_percentage(t_printf *prtf, va_list arg);
-void	spec_char(t_printf *prtf, va_list arg);
-void	spec_string(t_printf *prtf, va_list arg);
-void	spec_signed_int(t_printf *prtf, va_list arg);
-void	spec_octal(t_printf *prtf, va_list arg);
+void	spec_percentage(t_printf *prtf);
+void	spec_char(t_printf *prtf);
+void	spec_string(t_printf *prtf);
+void	spec_signed_int(t_printf *prtf);
+void	spec_octal(t_printf *prtf);
 
 void	ft_printf_error(char *error, int error_type);
 //csdioxXufFeEaAgGnp

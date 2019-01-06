@@ -21,6 +21,33 @@ int					ft_printf(const char *format, ...)
 	return (ret);
 }
 
+void	printf_clean_up(t_printf *prtf)
+{
+	prtf->args.val.intmax = 0;
+	prtf->args.flags = 0;
+	prtf->args.widthcision = 0;
+	prtf->args.width = 0;
+	prtf->args.precision = 0;
+	prtf->args.length = 0;
+	prtf->args.spec = 0;
+}
+
+void	printf_init(const char *format, t_printf *prtf)
+{
+	prtf->format = ft_strdup(format);
+	prtf->fmt = prtf->format;
+	prtf->output = (t_vector *)ft_memalloc(sizeof(t_vector));
+	ft_vector_init(prtf->output, ft_strlen(format));
+	printf_clean_up(prtf);
+}
+
+void	ft_prtf_free(t_printf *prtf)
+{
+	free(prtf->format);
+	ft_vector_free(prtf->output);
+	free(prtf->output);
+}
+
 /*
 ** Function: ft_vprintf
 ** Return: number of characters printed
@@ -38,22 +65,22 @@ int		ft_vprintf(const char *format, va_list arg)
 	char		*tmp;
 	int			ret;
 
-	//This shit needs some error checking :P
-	prtf.fmt = (char *)format;
-	prtf.format = prtf.fmt;
-	prtf.output = ft_memalloc(sizeof(*(prtf.output)));
-	ft_vector_init(prtf.output, ft_strlen(format));
+	tmp = NULL;
+	va_copy(prtf.args.arg, arg);
+	printf_init(format, &prtf);
 	while ((tmp = ft_strchr(prtf.fmt, '%')) != NULL)
 	{
 		ft_vector_nappend(prtf.output, prtf.fmt, (tmp - prtf.fmt));
 		prtf.fmt = tmp;
-		printf_parse_after_percent(&prtf, arg);
+		printf_parse_after_percent(&prtf);
+		printf_clean_up(&prtf);
 	}
 	ft_vector_append(prtf.output, prtf.fmt);
-	write(STDOUT_FILENO, &(prtf.output), prtf.output->len);
+	write(1, prtf.output->data, prtf.output->len);
 	ret = prtf.output->len;
-	ft_vector_free(prtf.output);
-	free(prtf.output);
+	va_end(arg);
+	va_end(prtf.args.arg);
+	ft_prtf_free(&prtf);
 	return (ret);
 }
 
@@ -63,14 +90,14 @@ int		ft_vprintf(const char *format, va_list arg)
 ** %[flags][width][.precision][length]specifier
 */
 
-void	printf_parse_after_percent(t_printf *prtf, va_list arg)
+void	printf_parse_after_percent(t_printf *prtf)
 {
 	prtf->start_spec = prtf->fmt;
 	prtf->fmt += 1;
 	printf_get_flags(prtf);
 	printf_get_widthcision(prtf);
 	printf_get_length(prtf);
-	printf_get_spec(prtf, arg);
+	printf_get_spec(prtf);
 }
 
 void	printf_get_flags(t_printf *prtf)
@@ -129,32 +156,32 @@ void printf_get_widthcision(t_printf *prtf)
 
 void printf_get_length(t_printf *prtf)
 {
-	while (prtf->fmt)
+	if (*prtf->fmt == 'l')
 	{
-		if (*prtf->fmt == 'l')
+		if (prtf->fmt[1] == 'l')
 		{
-			if (prtf->fmt[1] == 'l')
-			{
-				prtf->fmt++;
-				prtf->args.length |= PF_LL;
-			}
-			else
-				prtf->args.length |= PF_L;
+			prtf->fmt++;
+			prtf->args.length |= PF_LL;
 		}
-		else if (*prtf->fmt == 'h')
-		{
-			if (prtf->fmt[1] == 'h')
-			{
-				prtf->fmt++;
-				prtf->args.length |= PF_HH;
-			}
-			else
-				prtf->args.length |= PF_H;
-		}
-		else if (*prtf->fmt == 'z')
-			prtf->args.length |= PF_Z;
 		else
-			return ;
+			prtf->args.length |= PF_L;
+		prtf->fmt++;
+	}
+	else if (*prtf->fmt == 'h')
+	{
+		if (prtf->fmt[1] == 'h')
+		{
+			prtf->fmt++;
+			prtf->args.length |= PF_HH;
+		}
+		else
+			prtf->args.length |= PF_H;
+		prtf->fmt++;
+	}
+	else if (*prtf->fmt == 'z')
+	{
+		prtf->args.length |= PF_Z;
+		prtf->fmt++;
 	}
 }
 
@@ -163,7 +190,7 @@ void printf_get_length(t_printf *prtf)
 ** inited in a seperate header or function.
 */
 
-void printf_get_spec(t_printf *prtf, va_list arg)
+void printf_get_spec(t_printf *prtf)
 {
 	int i;
 
@@ -172,15 +199,16 @@ void printf_get_spec(t_printf *prtf, va_list arg)
 	{
 		{'%', &spec_percentage},
 		{'c', &spec_char},
-		// {'s', &spec_string},
-		// {'d', &spec_signed_int},
-		// {'i', &spec_signed_int},
+		{'s', &spec_string},
+		{'d', &spec_signed_int},
+		{'i', &spec_signed_int},
 		// {'o', &spec_octal},
 	};
 	while (++i < 6)
 		if (CMP(*prtf->fmt, g_spec[i].spec))
 		{
-			g_spec[i].func(prtf, arg);
+			prtf->fmt += 1;
+			g_spec[i].func(prtf);
 			return ;
 		}
 	ft_printf_error(prtf->start_spec, INVALID_SPEC);

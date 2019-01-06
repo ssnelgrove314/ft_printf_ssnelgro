@@ -2,7 +2,6 @@ NAME	:=	libftprintf.a
 AR		:=	ar
 CC 		:=	gcc
 CFLAGS	:=	-Wall -Wextra -Werror -I. -g
-DEBUG	:= -g
 
 SRC		:=	$(wildcard src/mem/*.c) \
 			$(wildcard src/string/*.c) \
