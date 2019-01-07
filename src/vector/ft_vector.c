@@ -89,3 +89,19 @@ void	ft_vector_free(t_vector *vector)
 		vector->data = NULL;
 	}
 }
+
+void	ft_vector_nprepend(t_vector *vector, char *newdata, size_t n)
+{
+	t_vector *output;
+	t_vector tmp;
+
+	output = (t_vector *)ft_memalloc(sizeof(t_vector));
+	ft_vector_init(output, vector->len + n);
+	ft_vector_nappend(output, newdata, n);
+	ft_vector_nappend(output, vector->data, vector->len);
+	tmp = *output;
+	*output = *vector;
+	*vector = tmp;
+	ft_vector_free(output);
+	free(output);
+}

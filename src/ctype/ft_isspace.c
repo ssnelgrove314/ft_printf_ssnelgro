@@ -15,7 +15,7 @@ int	ft_isspace(int c)
 	char *spaces;
 
 	spaces = "\t\n\v\f\r ";
-	while (spaces)
+	while (*spaces)
 	{
 		if (*spaces == (char)c)
 			return (1);

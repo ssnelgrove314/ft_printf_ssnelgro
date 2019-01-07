@@ -68,11 +68,11 @@ typedef union			s_printf_val
 
 typedef enum
 {
-	LEFT_JUST = 1 << 0,
-	PREPEND_SIGN = 1 << 1,
-	PREPEND_SPACE = 1 << 2,
-	ALT_FORM = 1 << 3,
-	PAD_ZEROS = 1 << 4,
+	PF_LEFT_JUST = 1 << 0,
+	PF_PREPEND_SIGN = 1 << 1,
+	PF_PREPEND_SPACE = 1 << 2,
+	PF_ALT_FORM = 1 << 3,
+	PF_PAD_ZEROS = 1 << 4,
 }e_pf_flags;
 
 typedef enum
@@ -92,6 +92,12 @@ typedef enum
 	PF_WIDTH_ASTERISK = 1 << 2,
 	PF_PRECISION_ASTERISK = 1 << 3,
 }e_pf_widthcision;
+
+typedef enum
+{
+	PF_SIGNED,
+	PF_UNSIGNED
+}e_pf_signess;
 
 typedef struct s_printf_args
 {
@@ -132,11 +138,16 @@ void	printf_get_length(t_printf *prtf);
 void	printf_get_spec(t_printf *prtf);
 
 //Append the result to the vector
+void	ft_pf_get_values(t_printf *prtf, char sign);
+
 void	spec_percentage(t_printf *prtf);
 void	spec_char(t_printf *prtf);
 void	spec_string(t_printf *prtf);
 void	spec_signed_int(t_printf *prtf);
 void	spec_octal(t_printf *prtf);
+void	spec_hex(t_printf *prtf);
+void	spec_decimal(t_printf *prtf);
+void	ft_format_str(t_printf *prtf, t_vector *output);
 
 void	ft_printf_error(char *error, int error_type);
 //csdioxXufFeEaAgGnp

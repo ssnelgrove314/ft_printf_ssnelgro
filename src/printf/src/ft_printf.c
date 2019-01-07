@@ -108,15 +108,15 @@ void	printf_get_flags(t_printf *prtf)
 	while (prtf->fmt)
 	{
 		if (CMP(*prtf->fmt, flags[0]))
-			prtf->args.flags |= LEFT_JUST;
+			prtf->args.flags |= PF_LEFT_JUST;
 		else if (CMP(*prtf->fmt, flags[1]))
-			prtf->args.flags |= PREPEND_SIGN;
+			prtf->args.flags |= PF_PREPEND_SIGN;
 		else if (CMP(*prtf->fmt, flags[2]))
-			prtf->args.flags |= PREPEND_SIGN;
+			prtf->args.flags |= PF_PREPEND_SIGN;
 		else if (CMP(*prtf->fmt, flags[3]))
-			prtf->args.flags |= ALT_FORM;
+			prtf->args.flags |= PF_ALT_FORM;
 		else if (CMP(*prtf->fmt, flags[4]))
-			prtf->args.flags |= PAD_ZEROS;
+			prtf->args.flags |= PF_PAD_ZEROS;
 		else
 			return ;
 		prtf->fmt += 1;
@@ -126,7 +126,7 @@ void	printf_get_flags(t_printf *prtf)
 
 void printf_get_widthcision(t_printf *prtf)
 {
-	while (prtf->fmt)
+	if (prtf->fmt)
 	{
 		if (ft_isdigit(*prtf->fmt))
 		{
@@ -136,8 +136,6 @@ void printf_get_widthcision(t_printf *prtf)
 		}
 		else if (*prtf->fmt == '*')
 			prtf->args.widthcision |= (PF_WIDTH_ASTERISK | PF_WIDTH_SET);
-		else
-			return ;
 		if (CMP(*prtf->fmt, '.'))
 		{
 			prtf->fmt++;
@@ -202,12 +200,16 @@ void printf_get_spec(t_printf *prtf)
 		{'s', &spec_string},
 		{'d', &spec_signed_int},
 		{'i', &spec_signed_int},
-		// {'o', &spec_octal},
+		{'o', &spec_octal},
+		{'x', &spec_hex},
+		{'X', &spec_hex},
+		{'u', &spec_decimal},
 	};
-	while (++i < 6)
+	while (++i < 9)
 		if (CMP(*prtf->fmt, g_spec[i].spec))
 		{
 			prtf->fmt += 1;
+			prtf->args.spec = g_spec[i].spec;
 			g_spec[i].func(prtf);
 			return ;
 		}

@@ -18,5 +18,6 @@ void				ft_vector_resize(t_vector *vector, size_t min);
 void				ft_vector_nappend(t_vector *vector, char *newdata,
 					size_t n);
 void				ft_vector_free(t_vector *vector);
+void				ft_vector_nprepend(t_vector *vector, char *newdata, size_t n);
 
 #endif
