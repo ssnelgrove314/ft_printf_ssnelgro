@@ -1,0 +1,32 @@
+unsigned char		a = 131 sizeof a = 1
+unsigned int		b = 4294967171 sizeof b = 4
+unsigned long		c = 18446744073709551491 sizeof c = 8
+unsigned short		d = 65411 sizeof d = 2
+size_t			e = 18446744073709551491 sizeof e = 8
+uintmax_t		f = 18446744073709551491 sizeof f = 8
+unsigned long long	g = 18446744073709551491 sizeof g = 8
+
+unsigned char		h = 0 sizeof h = 1
+unsigned int		i = 0 sizeof i = 4
+unsigned long		j = 0 sizeof j = 8
+unsigned short		k = 0 sizeof k = 2
+size_t			l = 0 sizeof l = 8
+uintmax_t		m = 0 sizeof m = 8
+unsigned long long	n = 0 sizeof n = 8
+
+unsigned char		o = 127 sizeof o = 1
+unsigned int		p = 2147483647 sizeof p = 4
+unsigned long		q = 2147483647 sizeof q = 8
+unsigned short		r = 65535 sizeof r = 2
+size_t			s = 2147483647 sizeof s = 8
+uintmax_t		t = 2147483647 sizeof t = 8
+unsigned long long	u = 2147483647 sizeof u = 8
+
+unsigned char		v = 255 sizeof v = 1
+unsigned int		w = 4294967295 sizeof w = 4
+unsigned long		x = 18446744073709551488 sizeof x = 8
+unsigned short		y = 0 sizeof y = 2
+size_t			z = 18446744071562067968 sizeof z = 8
+uintmax_t		zz = 18446744073709486080 sizeof zz = 8
+unsigned long long	aa = 18446744073709486080 sizeof aa = 8
+

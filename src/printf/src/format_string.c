@@ -4,10 +4,10 @@ void	handle_flags(t_printf *prtf, t_vector *output)
 {
 	if (prtf->args.flags & PF_PREPEND_SIGN && ft_atoi(output->data) > 0)
 		ft_vector_nprepend(output, "+", 1);
-	if (prtf->args.flags & PF_ALT_FORM)
-		if (ft_strchr("ox", prtf->args.spec))
-			ft_vector_nprepend(output, "0", 1);
-	if (prtf->args.flags & PF_PREPEND_SPACE && !(prtf->args.flags & PF_PREPEND_SIGN && prtf->args.flags && ft_atoi(output->data) > 0))
+	// if (prtf->args.flags & PF_ALT_FORM)
+	// 	if (ft_strchr("ox", prtf->args.spec))
+	// 		ft_vector_nprepend(output, "0", 1);
+	else if (prtf->args.flags & PF_PREPEND_SPACE && !(prtf->args.flags & PF_PREPEND_SIGN && prtf->args.flags && ft_atoi(output->data) > 0))
 		ft_vector_nprepend(output, " ", 1);
 }
 
