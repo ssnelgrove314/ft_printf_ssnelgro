@@ -112,7 +112,7 @@ void	printf_get_flags(t_printf *prtf)
 		else if (CMP(*prtf->fmt, flags[1]))
 			prtf->args.flags |= PF_PREPEND_SIGN;
 		else if (CMP(*prtf->fmt, flags[2]))
-			prtf->args.flags |= PF_PREPEND_SIGN;
+			prtf->args.flags |= PF_PREPEND_SPACE;
 		else if (CMP(*prtf->fmt, flags[3]))
 			prtf->args.flags |= PF_ALT_FORM;
 		else if (CMP(*prtf->fmt, flags[4]))
@@ -204,6 +204,7 @@ void printf_get_spec(t_printf *prtf)
 		{'x', &spec_hex},
 		{'X', &spec_hex},
 		{'u', &spec_decimal},
+		{'f', &spec_float},
 	};
 	while (++i < 9)
 		if (CMP(*prtf->fmt, g_spec[i].spec))

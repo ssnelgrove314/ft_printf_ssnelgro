@@ -147,6 +147,7 @@ void	spec_signed_int(t_printf *prtf);
 void	spec_octal(t_printf *prtf);
 void	spec_hex(t_printf *prtf);
 void	spec_decimal(t_printf *prtf);
+void	spec_float(t_printf *prtf);
 void	ft_format_str(t_printf *prtf, t_vector *output);
 
 void	ft_printf_error(char *error, int error_type);

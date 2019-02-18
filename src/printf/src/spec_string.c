@@ -1,18 +1,11 @@
 #include "../ft_printf.h"
 
-void	format_str(t_printf *prtf, t_vector *output)
-{
-	if ((size_t)prtf->args.precision < output->len)
-		output->len = prtf->args.precision;
-	if (prtf->args.width)
-		// pad_str(prtf, output);
-		return ;
-}
-
 void	spec_string(t_printf *prtf)
 {
 	t_vector output;
+	size_t length;
 
+	length = 0;
 	ft_vector_init(&output, 10);
 	// if (prtf->args.length & PF_L)
 	// {
@@ -23,8 +16,14 @@ void	spec_string(t_printf *prtf)
 	if (!prtf->args.val.str)
 		ft_vector_nappend(&output, "(null)", 6); //should probably make NULL_STR and NULL_STR_SIZE defines
 	else
-		ft_vector_nappend(&output, prtf->args.val.str, ft_strlen(prtf->args.val.str));
+	{
+		length = ft_strlen(prtf->args.val.str);
+		if (length > (size_t)prtf->args.precision)
+			ft_vector_nappend(&output, prtf->args.val.str, prtf->args.precision); 
+		else
+			ft_vector_nappend(&output, prtf->args.val.str, length);
+	}
+	ft_format_str(prtf, &output);
 	ft_vector_nappend(prtf->output, output.data, output.len);
-	format_str(prtf, &output);
 	ft_vector_free(&output);
 }

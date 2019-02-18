@@ -1,15 +1,15 @@
 #include "ft_string.h"
 
-void	ft_strfill(char *strtofill, size_t n, char fill_char)
+void	ft_strfill(char **strtofill, size_t n, char fill_char)
 {
-	char *str;
+	size_t i;
 	
-	str = strtofill;
-	if (!strtofill)
+	i = 0;
+	if (!strtofill || n < 1)
 		return ;
-	while (n--)
+	while (i < n)
 	{
-		*str = fill_char;
-		str++;
+		strtofill[0][i] = fill_char;
+		i++;
 	}
 }

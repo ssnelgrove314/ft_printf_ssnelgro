@@ -1,50 +1,60 @@
 #include "../ft_printf.h"
 
-void	handle_flags(t_printf *prtf, t_vector *output)
+void	ft_format_string_str(t_printf *prtf, t_vector *output)
 {
-	if (prtf->args.flags & PF_PREPEND_SIGN && ft_atoi(output->data) > 0)
-		ft_vector_nprepend(output, "+", 1);
-	// if (prtf->args.flags & PF_ALT_FORM)
-	// 	if (ft_strchr("ox", prtf->args.spec))
-	// 		ft_vector_nprepend(output, "0", 1);
-	else if (prtf->args.flags & PF_PREPEND_SPACE && !(prtf->args.flags & PF_PREPEND_SIGN && prtf->args.flags && ft_atoi(output->data) > 0))
-		ft_vector_nprepend(output, " ", 1);
-}
 
-void	handle_precision(t_printf *prtf, t_vector *output)
-{
-	if (!(prtf->args.widthcision & PF_PRECISION_SET) || ft_strchr("c%", prtf->args.spec))
-		return ; //possible error?
-	else if (prtf->args.spec == 's')
-		output->len > (size_t)prtf->args.precision ? output->len -= prtf->args.precision : 0;
-	else if (ft_strchr("dioxXu", prtf->args.spec))
-	{
-		while (output->len < (size_t)prtf->args.precision)
-			ft_vector_nprepend(output, "0", 1);
-	}
-}
-
-void	handle_width(t_printf *prtf, t_vector *output)
-{
-	char	*padding;
-	int		pad_len;
-	
-	pad_len = prtf->args.width - output->len;
-	padding = ft_strnew(pad_len);
-	ft_strfill(padding, pad_len, ' ');
-	if (prtf->args.flags & PF_LEFT_JUST)
-		ft_vector_nappend(output, padding, pad_len);
-	else
-		ft_vector_nprepend(output, padding, pad_len);
-	free(padding);
 }
 
 void	ft_format_str(t_printf *prtf, t_vector *output)
 {
-	if (prtf->args.flags)
-		handle_flags(prtf, output);
-	if (prtf->args.widthcision & PF_PRECISION_SET)
-		handle_precision(prtf, output);
-	if (prtf->args.widthcision & PF_WIDTH_SET)
-		handle_width(prtf, output);
+	size_t width_pad_len;
+	size_t sign_alt;
+	size_t precision_pad_len;
+	size_t num_len;
+	char pad_char;
+	int neg;
+	char *precision_pad;
+	char *width_pad;
+	char *sign_alt_pad;
+	//
+
+	if (prtf->args.spec == 's')
+		ft_format_string_str(prtf, output);
+	neg = 0;
+	
+	num_len = output->len;
+	precision_pad_len = (num_len < prtf->args.precision) ? num_len - prtf->args.precision : 0;
+	if (prtf->args.flags & PF_ALT_FORM && ft_strchr("ox", prtf->args.spec))
+		sign_alt = 2;
+	else if (output->data[0] == '-')
+	{
+		sign_alt = 0;
+		neg = 1;
+	}
+	else if (prtf->args.flags & PF_PREPEND_SIGN)
+		sign_alt = 1;
+	
+	width_pad_len = prtf->args.width - sign_alt - precision_pad_len - num_len;
+	precision_pad = ft_strnew(precision_pad_len);
+	ft_strfill(&precision_pad, precision_pad_len, '0');
+	ft_vector_nprepend(output, precision_pad, precision_pad_len);
+	free(precision_pad);
+
+// sign and alt form
+// if sign, either add + or move the -
+// if alt && x add "0x"
+// if space and !prepend sign, make sure a positive number is always preceded by a space.
+
+	pad_char = (prtf->args.flags & PF_PAD_ZEROS ? '0' : ' ');
+	if (precision_pad > 0)
+	{
+		width_pad = ft_strnew(width_pad_len);
+		ft_strfill(&width_pad, width_pad_len, pad_char);
+		if (prtf->args.flags & PF_LEFT_JUST)
+			ft_vector_nappend(output, width_pad, width_pad_len);
+		else
+			ft_vector_nprepend(output, width_pad, width_pad_len);
+	}
+	free(precision_pad);
+
 }
