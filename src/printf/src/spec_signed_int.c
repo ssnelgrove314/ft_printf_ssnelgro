@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   spec_signed_int.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssnelgro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/04 17:53:19 by ssnelgro          #+#    #+#             */
+/*   Updated: 2019/03/04 18:07:01 by ssnelgro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ft_printf.h"
 
-void	spec_signed_int(t_printf *prtf)
+void			spec_signed_int(t_printf *prtf)
 {
-	t_vector output;
-	char *val;
+	t_vector	output;
+	char		*val;
 
 	val = NULL;
 	ft_vector_init(&output, 10);

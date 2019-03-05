@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssnelgro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/04 20:14:17 by ssnelgro          #+#    #+#             */
+/*   Updated: 2019/03/04 20:16:49 by ssnelgro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ft_printf.h"
 
 /*
@@ -10,10 +22,10 @@
 ** and can take a variadic number of arguments.
 */
 
-int					ft_printf(const char *format, ...)
+int						ft_printf(const char *format, ...)
 {
-	va_list		arg;
- 	int			ret;
+	va_list				arg;
+	int					ret;
 
 	va_start(arg, format);
 	ret = ft_vprintf(format, arg);
@@ -21,7 +33,7 @@ int					ft_printf(const char *format, ...)
 	return (ret);
 }
 
-void	printf_clean_up(t_printf *prtf)
+void					printf_clean_up(t_printf *prtf)
 {
 	prtf->args.val.intmax = 0;
 	prtf->args.flags = 0;
@@ -32,7 +44,7 @@ void	printf_clean_up(t_printf *prtf)
 	prtf->args.spec = 0;
 }
 
-void	printf_init(const char *format, t_printf *prtf)
+void					printf_init(const char *format, t_printf *prtf)
 {
 	prtf->format = ft_strdup(format);
 	prtf->fmt = prtf->format;
@@ -41,7 +53,7 @@ void	printf_init(const char *format, t_printf *prtf)
 	printf_clean_up(prtf);
 }
 
-void	ft_prtf_free(t_printf *prtf)
+void					ft_prtf_free(t_printf *prtf)
 {
 	free(prtf->format);
 	ft_vector_free(prtf->output);
@@ -59,11 +71,11 @@ void	ft_prtf_free(t_printf *prtf)
 ** output vector until there are no more '%' to parse.
 */
 
-int		ft_vprintf(const char *format, va_list arg)
+int						ft_vprintf(const char *format, va_list arg)
 {
-	t_printf	prtf;
-	char		*tmp;
-	int			ret;
+	t_printf			prtf;
+	char				*tmp;
+	int					ret;
 
 	tmp = NULL;
 	va_copy(prtf.args.arg, arg);
@@ -90,7 +102,7 @@ int		ft_vprintf(const char *format, va_list arg)
 ** %[flags][width][.precision][length]specifier
 */
 
-void	printf_parse_after_percent(t_printf *prtf)
+void					printf_parse_after_percent(t_printf *prtf)
 {
 	prtf->start_spec = prtf->fmt;
 	prtf->fmt += 1;
@@ -100,9 +112,9 @@ void	printf_parse_after_percent(t_printf *prtf)
 	printf_get_spec(prtf);
 }
 
-void	printf_get_flags(t_printf *prtf)
+void					printf_get_flags(t_printf *prtf)
 {
-	char	*flags;
+	char				*flags;
 
 	flags = "-+ #0";
 	while (prtf->fmt)
@@ -134,7 +146,7 @@ void	printf_get_flags(t_printf *prtf)
 	return ;
 }
 
-void printf_get_widthcision(t_printf *prtf)
+void					printf_get_widthcision(t_printf *prtf)
 {
 	if (prtf->fmt)
 	{
@@ -143,7 +155,7 @@ void printf_get_widthcision(t_printf *prtf)
 			if ((prtf->args.flags & PF_PAD_ZEROS) && *(prtf->fmt + 1) == '.')
 				prtf->args.width = ft_atoi(prtf->fmt);
 			if (!(prtf->args.flags & PF_PAD_ZEROS))
-					prtf->args.width = ft_atoi(prtf->fmt);
+				prtf->args.width = ft_atoi(prtf->fmt);
 			prtf->args.widthcision |= PF_WIDTH_SET;
 			prtf->fmt += ft_numlen(prtf->args.width);
 		}
@@ -159,13 +171,14 @@ void printf_get_widthcision(t_printf *prtf)
 				prtf->fmt += ft_numlen(prtf->args.precision);
 			}
 			else if (*prtf->fmt == '*')
-				prtf->args.widthcision |= (PF_PRECISION_ASTERISK | PF_PRECISION_SET);
+				prtf->args.widthcision |=
+					(PF_PRECISION_ASTERISK | PF_PRECISION_SET);
 		}
 		return ;
 	}
 }
 
-void printf_get_length(t_printf *prtf)
+void					printf_get_length(t_printf *prtf)
 {
 	if (*prtf->fmt == 'l')
 	{
@@ -201,25 +214,26 @@ void printf_get_length(t_printf *prtf)
 ** inited in a seperate header or function.
 */
 
-void printf_get_spec(t_printf *prtf)
+t_printf_spec		g_spec[19] =
 {
-	int i;
+	{'%', &spec_percentage},
+	{'c', &spec_char},
+	{'s', &spec_string},
+	{'d', &spec_signed_int},
+	{'i', &spec_signed_int},
+	{'o', &spec_octal},
+	{'x', &spec_hex},
+	{'X', &spec_hex},
+	{'u', &spec_decimal},
+	{'f', &spec_float},
+	{'F', &spec_float},
+};
+
+void					printf_get_spec(t_printf *prtf)
+{
+	int					i;
 
 	i = -1;
-	t_printf_spec		g_spec[19] =
-	{
-		{'%', &spec_percentage},
-		{'c', &spec_char},
-		{'s', &spec_string},
-		{'d', &spec_signed_int},
-		{'i', &spec_signed_int},
-		{'o', &spec_octal},
-		{'x', &spec_hex},
-		{'X', &spec_hex},
-		{'u', &spec_decimal},
-		{'f', &spec_float},
-		{'F', &spec_float},
-	};
 	while (++i < 11)
 		if (CMP(*prtf->fmt, g_spec[i].spec))
 		{

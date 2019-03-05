@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pf_get_values.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssnelgro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/04 18:11:00 by ssnelgro          #+#    #+#             */
+/*   Updated: 2019/03/04 18:11:19 by ssnelgro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ft_printf.h"
 
 void	ft_pf_get_value_signed(t_printf *prtf)
@@ -11,27 +23,30 @@ void	ft_pf_get_value_signed(t_printf *prtf)
 	else if (prtf->args.length & PF_L)
 		prtf->args.val.signed_long = (long)va_arg(prtf->args.arg, long int);
 	else if (prtf->args.length & PF_LL)
-		prtf->args.val.signed_llong = (long long)va_arg(prtf->args.arg, long long int);
+		prtf->args.val.signed_llong =
+			(long long)va_arg(prtf->args.arg, long long int);
 	else if (prtf->args.length & PF_J)
 		prtf->args.val.intmax = (intmax_t)va_arg(prtf->args.arg, intmax_t);
 	else if (prtf->args.length & PF_Z)
 		prtf->args.val.ssizet = (ssize_t)va_arg(prtf->args.arg, ssize_t);
-	//lmao, should probably fix this. ._.
-	// prtf->args.val.intmax = (intmax_t)va_arg(prtf->args.arg, intmax_t);
 }
 
 void	ft_pf_get_value_unsigned(t_printf *prtf)
 {
 	if (prtf->args.length & PF_HH)
-		prtf->args.val.unsigned_char = (unsigned char)va_arg(prtf->args.arg, unsigned int);
+		prtf->args.val.unsigned_char =
+			(unsigned char)va_arg(prtf->args.arg, unsigned int);
 	else if (prtf->args.length & PF_H)
-		prtf->args.val.unsigned_short = (short)va_arg(prtf->args.arg, unsigned int);
+		prtf->args.val.unsigned_short =
+			(short)va_arg(prtf->args.arg, unsigned int);
 	else if (!prtf->args.length)
 		prtf->args.val.unsigned_int = va_arg(prtf->args.arg, unsigned int);
 	else if (prtf->args.length & PF_L)
-		prtf->args.val.unsigned_long = (unsigned long)va_arg(prtf->args.arg, unsigned long int);
+		prtf->args.val.unsigned_long =
+			(unsigned long)va_arg(prtf->args.arg, unsigned long int);
 	else if (prtf->args.length & PF_LL)
-		prtf->args.val.unsigned_llong = (unsigned long long)va_arg(prtf->args.arg, unsigned long long int);
+		prtf->args.val.unsigned_llong =
+			(unsigned long long)va_arg(prtf->args.arg, unsigned long long int);
 	else if (prtf->args.length & PF_J)
 		prtf->args.val.uintmax = (uintmax_t)va_arg(prtf->args.arg, uintmax_t);
 	else if (prtf->args.length & PF_Z)

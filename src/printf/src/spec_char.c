@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   spec_char.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssnelgro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/04 17:51:55 by ssnelgro          #+#    #+#             */
+/*   Updated: 2019/03/04 17:52:17 by ssnelgro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ft_printf.h"
 
 void	spec_char(t_printf *prtf)
@@ -17,7 +29,6 @@ void	spec_char(t_printf *prtf)
 		prtf->args.val.signed_char = (char)va_arg(prtf->args.arg, int);
 		ft_vector_nappend(&output, &prtf->args.val.signed_char, 1);
 	}
-	// handle_width(prtf, &output);
 	ft_vector_nappend(prtf->output, output.data, output.len);
 	ft_vector_free(&output);
 }

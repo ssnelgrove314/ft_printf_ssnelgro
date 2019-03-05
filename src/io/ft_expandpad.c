@@ -6,7 +6,7 @@
 /*   By: jkrause <jkrause@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 18:25:52 by jkrause           #+#    #+#             */
-/*   Updated: 2017/08/17 22:07:09 by jkrause          ###   ########.fr       */
+/*   Updated: 2019/03/04 18:34:45 by ssnelgro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void			*ft_expandwrite(void *new, int newlen, void *src, int *srcsize)
 {
-	int				length;
-	int				newlength;
-	char			*newbuf;
+	int			length;
+	int			newlength;
+	char		*newbuf;
 
 	length = newlen;
 	newlength = *srcsize + length;
@@ -29,9 +29,9 @@ void			*ft_expandwrite(void *new, int newlen, void *src, int *srcsize)
 	return (newbuf);
 }
 
-char				*ft_expandpad(char c, int repeat, char *result, int *bsize)
+char			*ft_expandpad(char c, int repeat, char *result, int *bsize)
 {
-	char				*tmp;
+	char		*tmp;
 
 	tmp = ft_strnew(repeat);
 	ft_memset(tmp, c, repeat);

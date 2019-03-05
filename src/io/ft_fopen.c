@@ -1,29 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_fopen.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssnelgro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/04 18:33:53 by ssnelgro          #+#    #+#             */
+/*   Updated: 2019/03/04 18:34:16 by ssnelgro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 
-int ft_fopen(const char *filename, const char *mode)
+int			ft_fopen(const char *filename, const char *mode)
 {
-    int fd;
+	int		fd;
 
-    fd = 0;
-    if (ft_strcmp("r", mode) == 0)
-        fd = open(filename, O_RDONLY);
-    else if (ft_strcmp("w", mode) == 0)
-        fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC);
-    else if (ft_strcmp("a", mode) == 0)
-        fd = open(filename, O_WRONLY | O_CREAT | O_APPEND);
-    else if (ft_strcmp("r+", mode) == 0)
-        fd = open(filename, O_RDWR);
-    else if (ft_strcmp("w+", mode) == 0)
-        fd = open(filename, O_RDWR | O_CREAT | O_TRUNC);
-    else if (ft_strcmp("a+", mode) == 0)
-        fd = open(filename, O_RDWR | O_CREAT | O_APPEND);
-    else
-    {
-        ft_putendl("Usage: A valid filename to open and a mode to open it in.");
-        ft_putendl("Modes: [r,w,a,r+,w+,a+]");
-    }
-    return (fd);
+	fd = 0;
+	if (ft_strcmp("r", mode) == 0)
+		fd = open(filename, O_RDONLY);
+	else if (ft_strcmp("w", mode) == 0)
+		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC);
+	else if (ft_strcmp("a", mode) == 0)
+		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND);
+	else if (ft_strcmp("r+", mode) == 0)
+		fd = open(filename, O_RDWR);
+	else if (ft_strcmp("w+", mode) == 0)
+		fd = open(filename, O_RDWR | O_CREAT | O_TRUNC);
+	else if (ft_strcmp("a+", mode) == 0)
+		fd = open(filename, O_RDWR | O_CREAT | O_APPEND);
+	else
+	{
+		ft_putendl("Usage: A valid filename to open and a mode to open it in.");
+		ft_putendl("Modes: [r,w,a,r+,w+,a+]");
+	}
+	return (fd);
 }

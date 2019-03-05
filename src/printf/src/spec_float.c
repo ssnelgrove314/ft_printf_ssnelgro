@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   spec_float.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssnelgro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/04 18:16:20 by ssnelgro          #+#    #+#             */
+/*   Updated: 2019/03/04 20:06:23 by ssnelgro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ft_printf.h"
 #include <math.h>
 #define DABS(x) (((x) < 0.0f) ? (-x) : (x))
-#define UPPER(x) ((x)=='X'||(x)=='F'||(x)=='E'||(x)=='G'||(x)=='A')
+#define UPPER(x) ((x) == 'X' || (x)=='F' || (x)=='E' || (x)=='G' || (x)=='A')
 
 uintmax_t		ft_pw(uintmax_t nb, uintmax_t power)
 {
-	uintmax_t i;
+	uintmax_t	i;
 
 	if (power == 0)
 		return (1);
@@ -18,43 +30,28 @@ uintmax_t		ft_pw(uintmax_t nb, uintmax_t power)
 		return (nb * ft_pw(nb, power - 1));
 }
 
-void reverse(char *str, int len) 
-{ 
-    int i=0, j=len-1, temp; 
-    while (i<j) 
-    { 
-        temp = str[i]; 
-        str[i] = str[j]; 
-        str[j] = temp; 
-        i++; j--; 
-    } 
-} 
-  
- // Converts a given integer x to string str[].  d is the number 
- // of digits required in output. If d is more than the number 
- // of digits in x, then 0s are added at the beginning. 
-int intToStr(int x, char str[], int d) 
-{ 
-    int i = 0; 
-    while (x) 
-    { 
-        str[i++] = (x%10) + '0'; 
-        x = x/10; 
-    } 
-  
-    // If number of digits required is more, then 
-    // add 0s at the beginning 
-    while (i < d) 
-        str[i++] = '0'; 
-  
-    reverse(str, i); 
-    str[i] = '\0'; 
-    return i; 
-} 
-
-int get_int_len(uintmax_t nbr)
+void	reverse(char *str, int len)
 {
-	int num;
+	int	i;
+	int	j;
+	int	temp;
+
+	i = 0;
+	j = len - 1;
+	temp = 0;
+	while (i < j)
+	{
+		temp = str[i];
+		str[i] = str[j];
+		str[j] = temp;
+		i++;
+		j--;
+	}
+}
+
+int		get_int_len(uintmax_t nbr)
+{
+	int	num;
 
 	num = 0;
 	if (nbr == 0)
@@ -67,21 +64,20 @@ int get_int_len(uintmax_t nbr)
 	return (num);
 }
 
-void			pf_ldtoa_int_base(t_printf *prtf, uintmax_t nbr, int int_len,
-									char *res)
+void			pf_ldtoa_int_base(
+				t_printf *prtf, uintmax_t nbr, int int_len, char *res)
 {
 	char		char_case;
 	int			base;
 	int			tmp_len;
 	int			len_diff;
-	// size_t		len_diff;
 
 	base = 10;
 	char_case = ('a' - 10 - (('a' - 'A') * UPPER(prtf->args.spec)));
 	tmp_len = get_int_len(nbr);
 	len_diff = int_len - tmp_len;
 	int_len = tmp_len + ((prtf->args.neg == 1) ? 1 : 0);
-	while (int_len-- > (prtf->args.neg ==1) ? 1 : 0)
+	while (int_len-- > (prtf->args.neg == 1) ? 1 : 0)
 	{
 		res[int_len] = (nbr % base) + ((nbr % base < 10) ? '0' : char_case);
 		nbr /= base;
@@ -92,23 +88,27 @@ void			pf_ldtoa_int_base(t_printf *prtf, uintmax_t nbr, int int_len,
 	}
 }
 
+/*
+** Converts a floating point number to string.
+*/
 
-// Converts a floating point number to string. 
-char *ft_ftoa(t_printf *prtf, long double n)
-{ 
+char			*ft_ftoa(t_printf *prtf, long double n)
+{
 	char		*res;
 	long double	frac;
 	int			base;
 	int			int_len;
 	int			tot_len;
 	int			neg;
+	char		tmp;
 
 	base = 10;
 	prtf->args.neg = 0;
 	int_len = 0;
 	neg = 0;
 	res = (char*)malloc(sizeof(char) * 59);
-	tot_len = (prtf->args.precision != 0 || prtf->args.flags & PF_ALT_FORM) ? 1 : 0;
+	tot_len =
+		(prtf->args.precision != 0 || prtf->args.flags & PF_ALT_FORM) ? 1 : 0;
 	if (n < 0)
 	{
 		n *= -1;
@@ -124,19 +124,20 @@ char *ft_ftoa(t_printf *prtf, long double n)
 		n /= 10;
 	}
 	tot_len += int_len + prtf->args.precision;
-	// pf_ldtoa_int_base(prtf, (uintmax_t)DABS(n), int_len, res);
 	if (prtf->args.precision != 0)
 	{
 		prtf->args.precision++;
-		frac = (DABS(n) - (uintmax_t)DABS(n)) * ft_pw(base, prtf->args.precision + int_len);
-		frac = ((uintmax_t)DABS(frac) % base >= (uintmax_t)(base / 2)) ?
+		frac =
+			(DABS(n) - (uintmax_t)DABS(n))
+			* ft_pw(base, prtf->args.precision + int_len);
+		frac =
+			((uintmax_t)DABS(frac) % base >= (uintmax_t)(base / 2)) ?
 			(frac / base) + 1 : frac / base;
 		pf_ldtoa_int_base(prtf, (uintmax_t)DABS(frac), tot_len, res);
 	}
 	if (prtf->args.precision != 0 || prtf->args.flags & PF_ALT_FORM)
 	{
-		char tmp = res[int_len];
-
+		tmp = res[int_len];
 		res[int_len] = '.';
 		int_len++;
 		tot_len--;
@@ -150,22 +151,22 @@ char *ft_ftoa(t_printf *prtf, long double n)
 	if (neg)
 		res[0] = '-';
 	return (res);
-} 
+}
 
-void ft_get_float_val(t_printf *prtf)
+void	ft_get_float_val(t_printf *prtf)
 {
 	prtf->args.val.double_double = va_arg(prtf->args.arg, double);
 }
 
-void	spec_float(t_printf *prtf)
+void			spec_float(t_printf *prtf)
 {
-	t_vector output;
-    char *val;
+	t_vector	output;
+	char		*val;
 
 	ft_vector_init(&output, 10);
 	ft_get_float_val(prtf);
-    if (prtf->args.precision <= 0)
-        prtf->args.precision = 6;
+	if (prtf->args.precision <= 0)
+		prtf->args.precision = 6;
 	val = ft_ftoa(prtf, prtf->args.val.double_double);
 	ft_vector_append(&output, val);
 	ft_strdel(&val);

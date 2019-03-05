@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_error.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssnelgro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/04 17:54:33 by ssnelgro          #+#    #+#             */
+/*   Updated: 2019/03/04 17:55:17 by ssnelgro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ft_printf.h"
 
 void	ft_printf_error(char *error, int error_type)
@@ -5,7 +17,7 @@ void	ft_printf_error(char *error, int error_type)
 	char *errormsg;
 
 	errormsg = NULL;
-	if(CMP(NULL_FMT_STRING, error_type))
+	if (CMP(NULL_FMT_STRING, error_type))
 		errormsg = "Invalid format string\n";
 	else if (CMP(INVALID_SPEC, error_type))
 		errormsg = ft_strjoin(error, ": invalid conversion specification\n");
