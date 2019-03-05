@@ -1,27 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   spec_string.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssnelgro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/01 15:48:24 by ssnelgro          #+#    #+#             */
+/*   Updated: 2019/03/01 15:50:23 by ssnelgro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ft_printf.h"
 
-void	format_str(t_printf *prtf, t_vector *output)
+void			spec_string(t_printf *prtf)
 {
-	prtf->output = output; //delete this shit later:W
-	
-	return ;
-}
+	t_vector	output;
+	size_t		length;
 
-void	spec_string(t_printf *prtf, va_list arg)
-{
-	t_vector output;
-
-	if (prtf->args.length & PF_L)
-	{
-		prtf->args.val.wide_char = va_arg(arg, wchar_t *);
-		ft_vector_nappend(&output, (char *)prtf->args.val.wide_char, 2);
-	}
+	length = 0;
+	ft_vector_init(&output, 10);
+	prtf->args.val.str = va_arg(prtf->args.arg, char *);
+	if (!prtf->args.val.str)
+		ft_vector_nappend(&output, "(null)", 6);
 	else
 	{
-		prtf->args.val.str = va_arg(arg, char *);
-		ft_vector_nappend(&output, &prtf->args.val.signed_char, 1);
+		length = ft_strlen(prtf->args.val.str);
+		if (length < (size_t)prtf->args.precision)
+			ft_vector_nappend(&output,
+			prtf->args.val.str, prtf->args.precision);
+		else
+			ft_vector_nappend(&output, prtf->args.val.str, length);
 	}
+	ft_format_str(prtf, &output);
 	ft_vector_nappend(prtf->output, output.data, output.len);
-	format_str(prtf, &output);
 	ft_vector_free(&output);
 }

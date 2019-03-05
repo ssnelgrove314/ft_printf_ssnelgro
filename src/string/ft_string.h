@@ -29,5 +29,6 @@ char				*ft_strnstr(const char *hay, const char *need, size_t len);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t				ft_strlcpy(char *dst, const char *src, size_t size);
+void				ft_strfill(char **strtofill, size_t n, char fill_char);
 
 #endif

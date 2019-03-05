@@ -1,8 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   spec_percentage.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssnelgro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/01 16:06:08 by ssnelgro          #+#    #+#             */
+/*   Updated: 2019/03/01 16:06:12 by ssnelgro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ft_printf.h"
 
-void	spec_percentage(t_printf *prtf, va_list arg)
+void	spec_percentage(t_printf *prtf)
 {
-	if (!arg || prtf->args.flags || prtf->args.width || prtf->args.precision || prtf->args.length)
-		ft_printf_error(prtf->start_spec, INVALID_SPEC);
 	ft_vector_nappend(prtf->output, "%", 1);
 }

@@ -1,0 +1,22 @@
+% 4.5i 42 == | 00042|
+%04.5i 42 == |00042|
+%04.3i 42 == | 042|
+%04.2i 42 == |  42|
+SIZE: 1
+SIZE: 15
+SIZE: 1
+SIZE: 13
+SIZE: 6
+SIZE: 2
+SIZE: 1
+SIZE: 13
+SIZE: 5
+SIZE: 2
+SIZE: 1
+SIZE: 13
+SIZE: 4
+SIZE: 2
+SIZE: 1
+SIZE: 13
+SIZE: 4
+SIZE: 2

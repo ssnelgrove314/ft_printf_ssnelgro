@@ -6,7 +6,9 @@
 	],
 	"settings": {
 		"files.associations": {
-			"ft_printf.h": "c"
+			"ft_printf.h": "c",
+			"libft.h": "c",
+			"ft_vector.h": "c"
 		}
 	}
 }

@@ -1,12 +1,12 @@
-#include "../ft_printf.h"
+#include "libft.h"
 
 int main(void)
 {
 	t_vector test;
-	ft_vector_init(&test, 100);
-	ft_vector_append(&test, "c");
-	ft_vector_nappend(&test, "     ", 5);
-	ft_subvector_slide(&test, test.data, test.data + 6, 1);
-	printf("%s\n", test.data);
+	char *t = (char *)ft_memalloc(sizeof(char) * 37);
+	ft_vector_init(&test, 37);
+	ft_vector_nappend(&test, "0123456789abcdefghijklmnop", 36);
+	ft_subvector_slide(&test, test.data, t, 2);
+	printf("%s\n%s\n", test.data, t);
 	return (0);
 }
