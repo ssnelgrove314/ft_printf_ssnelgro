@@ -1,0 +1,15 @@
+%      i 42 == | 42|
+% i -42 == |-42|
+% 4i 42 == |  42|
+SIZE: 1
+SIZE: 15
+SIZE: 3
+SIZE: 2
+SIZE: 1
+SIZE: 11
+SIZE: 3
+SIZE: 2
+SIZE: 1
+SIZE: 11
+SIZE: 4
+SIZE: 2
