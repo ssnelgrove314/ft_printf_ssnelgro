@@ -19,7 +19,11 @@
 # include <stdarg.h>
 # define CMP(x,y)(x == y)
 
+<<<<<<< HEAD
 typedef union				u_printf_val
+=======
+typedef union			s_printf_val
+>>>>>>> refs/remotes/origin/master
 {
 	void					*void_ptr;
 	short int				signed_short;
@@ -59,9 +63,15 @@ enum
 	PF_PREPEND_SPACE = 1 << 2,
 	PF_ALT_FORM = 1 << 3,
 	PF_PAD_ZEROS = 1 << 4,
+<<<<<<< HEAD
 }							e_pf_flags;
 
 enum
+=======
+}e_pf_flags;
+
+typedef enum
+>>>>>>> refs/remotes/origin/master
 {
 	PF_HH = 1 << 0,
 	PF_H = 1 << 1,
@@ -69,7 +79,11 @@ enum
 	PF_LL = 1 << 3,
 	PF_J = 1 << 4,
 	PF_Z = 1 << 5,
+<<<<<<< HEAD
 }							e_pf_length;
+=======
+}e_pf_length;
+>>>>>>> refs/remotes/origin/master
 
 enum
 {
@@ -79,7 +93,17 @@ enum
 	PF_PRECISION_ASTERISK = 1 << 3,
 }							e_pf_widthcision;
 
+<<<<<<< HEAD
 enum
+=======
+typedef enum
+{
+	PF_SIGNED,
+	PF_UNSIGNED
+}e_pf_signess;
+
+typedef struct s_printf_args
+>>>>>>> refs/remotes/origin/master
 {
 	PF_SIGNED,
 	PF_UNSIGNED
@@ -87,6 +111,7 @@ enum
 
 typedef struct				s_printf_args
 {
+<<<<<<< HEAD
 	uint8_t					flags;
 	uint8_t					widthcision;
 	int						width;
@@ -99,6 +124,18 @@ typedef struct				s_printf_args
 }							t_printf_args;
 
 typedef struct				s_printf
+=======
+	t_vector		*output;
+	char			*fmt;
+	char			*format;
+	char			*start_spec;
+	t_printf_args	args;
+}					t_printf;
+
+typedef void	(*t_spec_func)(t_printf *prtf);
+
+typedef struct	s_printf_spec
+>>>>>>> refs/remotes/origin/master
 {
 	t_vector				*output;
 	char					*fmt;
@@ -109,6 +146,7 @@ typedef struct				s_printf
 
 typedef void				(*t_spec_func)(t_printf *prtf);
 
+<<<<<<< HEAD
 typedef struct				s_printf_spec
 {
 	char					spec;
@@ -136,6 +174,31 @@ void						ft_format_str(t_printf *prtf, t_vector *output);
 void						ft_printf_error(char *error, int error_type);
 
 enum
+=======
+void	printf_parse_after_percent(t_printf *prtf);
+void	printf_get_flags(t_printf *prtf);
+void	printf_get_widthcision(t_printf *prtf);
+void	printf_get_length(t_printf *prtf);
+void	printf_get_spec(t_printf *prtf);
+
+//Append the result to the vector
+void	ft_pf_get_values(t_printf *prtf, char sign);
+
+void	spec_percentage(t_printf *prtf);
+void	spec_char(t_printf *prtf);
+void	spec_string(t_printf *prtf);
+void	spec_signed_int(t_printf *prtf);
+void	spec_octal(t_printf *prtf);
+void	spec_hex(t_printf *prtf);
+void	spec_decimal(t_printf *prtf);
+void	spec_float(t_printf *prtf);
+void	ft_format_str(t_printf *prtf, t_vector *output);
+
+void	ft_printf_error(char *error, int error_type);
+//csdioxXufFeEaAgGnp
+
+typedef enum	s_printf_errors
+>>>>>>> refs/remotes/origin/master
 {
 	NULL_FMT_STRING,
 	INVALID_SPEC,

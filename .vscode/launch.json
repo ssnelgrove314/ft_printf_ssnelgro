@@ -22,8 +22,6 @@
 				"MIMode" : "lldb",
 				// "miDebuggerPath": "/usr/bin/lldb"
 			},
-
-
             "args": ["%c hello", "a"],
             "cwd": "${workspaceFolder}",
 			"externalConsole": false,

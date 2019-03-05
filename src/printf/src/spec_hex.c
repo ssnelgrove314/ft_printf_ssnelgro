@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -21,6 +22,18 @@ void			spec_hex(t_printf *prtf)
 	base = NULL;
 	(prtf->args.spec == 'x') ? (base = "0123456789abcdef") :
 	(base = "0123456789ABCDEF");
+=======
+#include "../ft_printf.h"
+
+void	spec_hex(t_printf *prtf)
+{
+	t_vector output;
+	char *val;
+	char *base;
+
+	base = NULL;
+	(prtf->args.spec == 'x') ? (base = "0123456789abcdef") : (base = "0123456789ABCDEF");
+>>>>>>> refs/remotes/origin/master
 	val = NULL;
 	ft_vector_init(&output, 10);
 	ft_pf_get_values(prtf, PF_UNSIGNED);
@@ -30,4 +43,8 @@ void			spec_hex(t_printf *prtf)
 	ft_format_str(prtf, &output);
 	ft_vector_nappend(prtf->output, output.data, output.len);
 	ft_vector_free(&output);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> refs/remotes/origin/master

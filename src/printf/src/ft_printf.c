@@ -35,7 +35,11 @@ int					ft_printf(const char *format, ...)
 	return (ret);
 }
 
+<<<<<<< HEAD
 void				printf_clean_up(t_printf *prtf)
+=======
+void	printf_clean_up(t_printf *prtf)
+>>>>>>> refs/remotes/origin/master
 {
 	prtf->args.val.intmax = 0;
 	prtf->args.flags = 0;
@@ -46,7 +50,11 @@ void				printf_clean_up(t_printf *prtf)
 	prtf->args.spec = 0;
 }
 
+<<<<<<< HEAD
 void				printf_init(const char *format, t_printf *prtf)
+=======
+void	printf_init(const char *format, t_printf *prtf)
+>>>>>>> refs/remotes/origin/master
 {
 	prtf->format = ft_strdup(format);
 	prtf->fmt = prtf->format;
@@ -55,7 +63,11 @@ void				printf_init(const char *format, t_printf *prtf)
 	printf_clean_up(prtf);
 }
 
+<<<<<<< HEAD
 void				ft_prtf_free(t_printf *prtf)
+=======
+void	ft_prtf_free(t_printf *prtf)
+>>>>>>> refs/remotes/origin/master
 {
 	free(prtf->format);
 	ft_vector_free(prtf->output);
@@ -75,9 +87,15 @@ void				ft_prtf_free(t_printf *prtf)
 
 int					ft_vprintf(const char *format, va_list arg)
 {
+<<<<<<< HEAD
 	t_printf		prtf;
 	char			*tmp;
 	int				ret;
+=======
+	t_printf	prtf;
+	char		*tmp;
+	int			ret;
+>>>>>>> refs/remotes/origin/master
 
 	tmp = NULL;
 	va_copy(prtf.args.arg, arg);
@@ -104,7 +122,11 @@ int					ft_vprintf(const char *format, va_list arg)
 ** %[flags][width][.precision][length]specifier
 */
 
+<<<<<<< HEAD
 void		printf_parse_after_percent(t_printf *prtf)
+=======
+void	printf_parse_after_percent(t_printf *prtf)
+>>>>>>> refs/remotes/origin/master
 {
 	prtf->start_spec = prtf->fmt;
 	prtf->fmt += 1;
@@ -130,6 +152,7 @@ void		printf_get_flags(t_printf *prtf)
 		else if (CMP(*prtf->fmt, flags[3]))
 			prtf->args.flags |= PF_ALT_FORM;
 		else if (CMP(*prtf->fmt, flags[4]))
+<<<<<<< HEAD
 		{
 			if (ft_isdigit(*(prtf->fmt + 1)))
 			{
@@ -141,6 +164,9 @@ void		printf_get_flags(t_printf *prtf)
 			}
 			prtf->args.flags |= PF_PAD_ZEROS;
 		}
+=======
+			prtf->args.flags |= PF_PAD_ZEROS;
+>>>>>>> refs/remotes/origin/master
 		else
 			return ;
 		prtf->fmt += 1;
@@ -216,13 +242,32 @@ void			printf_get_length(t_printf *prtf)
 ** inited in a seperate header or function.
 */
 
+<<<<<<< HEAD
 void				printf_get_spec(t_printf *prtf)
+=======
+void printf_get_spec(t_printf *prtf)
+>>>>>>> refs/remotes/origin/master
 {
 	int				i;
 
 	i = -1;
 	while (++i < 11)
 	{
+<<<<<<< HEAD
+=======
+		{'%', &spec_percentage},
+		{'c', &spec_char},
+		{'s', &spec_string},
+		{'d', &spec_signed_int},
+		{'i', &spec_signed_int},
+		{'o', &spec_octal},
+		{'x', &spec_hex},
+		{'X', &spec_hex},
+		{'u', &spec_decimal},
+		{'f', &spec_float},
+	};
+	while (++i < 9)
+>>>>>>> refs/remotes/origin/master
 		if (CMP(*prtf->fmt, g_spec[i].spec))
 		{
 			prtf->fmt += 1;

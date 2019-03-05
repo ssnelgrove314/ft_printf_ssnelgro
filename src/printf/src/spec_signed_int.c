@@ -12,14 +12,22 @@
 
 #include "../ft_printf.h"
 
+<<<<<<< HEAD
 void			spec_signed_int(t_printf *prtf)
 {
 	t_vector	output;
 	char		*val;
+=======
+void	spec_signed_int(t_printf *prtf)
+{
+	t_vector output;
+	char *val;
+>>>>>>> refs/remotes/origin/master
 
 	val = NULL;
 	ft_vector_init(&output, 10);
 	ft_pf_get_values(prtf, PF_SIGNED);
+<<<<<<< HEAD
 	if (prtf->args.length & PF_HH)
 		val = ft_itoa(prtf->args.val.signed_char);
 	else if (prtf->args.length & PF_H)
@@ -32,9 +40,16 @@ void			spec_signed_int(t_printf *prtf)
 		val = ft_imaxtoa(prtf->args.val.intmax);
 	else if (prtf->args.length & PF_Z)
 		val = ft_imaxtoa(prtf->args.val.ssizet);
+=======
+	val = ft_imaxtoa(prtf->args.val.signed_int);
+>>>>>>> refs/remotes/origin/master
 	ft_vector_append(&output, val);
 	ft_strdel(&val);
 	ft_format_str(prtf, &output);
 	ft_vector_nappend(prtf->output, output.data, output.len);
 	ft_vector_free(&output);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> refs/remotes/origin/master

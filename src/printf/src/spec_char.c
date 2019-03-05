@@ -12,7 +12,11 @@
 
 #include "../ft_printf.h"
 
+<<<<<<< HEAD
 void			spec_char(t_printf *prtf)
+=======
+void	spec_char(t_printf *prtf)
+>>>>>>> refs/remotes/origin/master
 {
 	t_vector	output;
 
