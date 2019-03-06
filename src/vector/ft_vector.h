@@ -13,6 +13,7 @@
 #ifndef FT_VECTOR_H
 # define FT_VECTOR_H
 
+# include <stdlib.h>
 typedef struct		s_vector
 {
 	size_t			len;
@@ -30,5 +31,7 @@ void				ft_vector_nappend(t_vector *vector, char *newdata,
 void				ft_vector_free(t_vector *vector);
 void				ft_vector_nprepend(
 				t_vector *vector, char *newdata, size_t n);
+void				ft_vector_ninsert(
+			t_vector *vector, char *newdata, size_t new_size, size_t position);
 
 #endif

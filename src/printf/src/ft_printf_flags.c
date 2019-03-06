@@ -38,7 +38,7 @@ t_printf_spec		g_spec[19] =
 ** %[flags][width][.precision][length]specifier
 */
 
-void					printf_parse_after_percent(t_printf *prtf)
+void				printf_parse_after_percent(t_printf *prtf)
 {
 	prtf->start_spec = prtf->fmt;
 	prtf->fmt += 1;
@@ -48,9 +48,22 @@ void					printf_parse_after_percent(t_printf *prtf)
 	printf_get_spec(prtf);
 }
 
-void					printf_get_flags(t_printf *prtf)
+static void			printf_get_flags_widthprec(t_printf *prtf)
 {
-	char				*flags;
+	if (ft_isdigit(*(prtf->fmt + 1)))
+	{
+		if (*(prtf->fmt + 2) == '.')
+			prtf->args.width = ft_atoi(prtf->fmt + 1);
+		else
+			prtf->args.precision = ft_atoi(prtf->fmt + 1);
+		prtf->fmt += 1;
+	}
+	prtf->args.flags |= PF_PAD_ZEROS;
+}
+
+void				printf_get_flags(t_printf *prtf)
+{
+	char			*flags;
 
 	flags = "-+ #0";
 	while (prtf->fmt)
@@ -64,17 +77,7 @@ void					printf_get_flags(t_printf *prtf)
 		else if (CMP(*prtf->fmt, flags[3]))
 			prtf->args.flags |= PF_ALT_FORM;
 		else if (CMP(*prtf->fmt, flags[4]))
-		{
-			if (ft_isdigit(*(prtf->fmt + 1)))
-			{
-				if (*(prtf->fmt + 2) == '.')
-					prtf->args.width = ft_atoi(prtf->fmt + 1);
-				else
-					prtf->args.precision = ft_atoi(prtf->fmt + 1);
-				prtf->fmt += 1;
-			}
-			prtf->args.flags |= PF_PAD_ZEROS;
-		}
+			printf_get_flags_widthprec(prtf);
 		else
 			return ;
 		prtf->fmt += 1;
@@ -82,39 +85,7 @@ void					printf_get_flags(t_printf *prtf)
 	return ;
 }
 
-void					printf_get_widthcision(t_printf *prtf)
-{
-	if (prtf->fmt)
-	{
-		if (ft_isdigit(*prtf->fmt))
-		{
-			if ((prtf->args.flags & PF_PAD_ZEROS) && *(prtf->fmt + 1) == '.')
-				prtf->args.width = ft_atoi(prtf->fmt);
-			if (!(prtf->args.flags & PF_PAD_ZEROS))
-				prtf->args.width = ft_atoi(prtf->fmt);
-			prtf->args.widthcision |= PF_WIDTH_SET;
-			prtf->fmt += ft_numlen(prtf->args.width);
-		}
-		else if (*prtf->fmt == '*')
-			prtf->args.widthcision |= (PF_WIDTH_ASTERISK | PF_WIDTH_SET);
-		if (CMP(*prtf->fmt, '.'))
-		{
-			prtf->fmt++;
-			if (ft_isdigit(*prtf->fmt))
-			{
-				prtf->args.precision = ft_atoi(prtf->fmt);
-				prtf->args.widthcision |= PF_PRECISION_SET;
-				prtf->fmt += ft_numlen(prtf->args.precision);
-			}
-			else if (*prtf->fmt == '*')
-				prtf->args.widthcision |=
-					(PF_PRECISION_ASTERISK | PF_PRECISION_SET);
-		}
-		return ;
-	}
-}
-
-void					printf_get_length(t_printf *prtf)
+void				printf_get_length(t_printf *prtf)
 {
 	if (*prtf->fmt == 'l')
 	{
@@ -138,16 +109,11 @@ void					printf_get_length(t_printf *prtf)
 			prtf->args.length |= PF_H;
 		prtf->fmt++;
 	}
-	else if (*prtf->fmt == 'z')
-	{
-		prtf->args.length |= PF_Z;
-		prtf->fmt++;
-	}
 }
 
-void					printf_get_spec(t_printf *prtf)
+void				printf_get_spec(t_printf *prtf)
 {
-	int					i;
+	int				i;
 
 	i = -1;
 	while (++i < 11)

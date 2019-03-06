@@ -8,7 +8,8 @@
 		"files.associations": {
 			"ft_printf.h": "c",
 			"libft.h": "c",
-			"ft_vector.h": "c"
+			"ft_vector.h": "c",
+			"stat.h": "c"
 		}
 	}
 }

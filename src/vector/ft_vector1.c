@@ -40,20 +40,16 @@ int				ft_vectorspace_init(
 	return (0);
 }
 
-void			ft_subvector_slide(
-				t_vector *vector, char *data, char *target, size_t data_len)
+void				ft_vector_ninsert(
+			t_vector *vector, char *newdata, size_t new_size, size_t position)
 {
-	VAR(int, orient, target >= data ? 1 : -1);
-	VAR(char *, start, ~orient ? data : data + (data_len - 1));
-	VAR(char *, subt, start + (orient * data_len));
-	VAR(int, shifts, ~orient ? (target - subt) : (subt - target));
-	if (shifts < (int)(~orient ? data_len : data_len - 1))
-		return ;
-	while (shifts-- != (~orient ? 0 : -1))
-	{
-		ft_charswap(start, subt);
-		start += orient;
-		subt += orient;
-	}
-	ft_subvector_slide(vector, start, target, data_len);
+	t_vector		*output;
+
+	output = (t_vector *)ft_memalloc(sizeof(t_vector));
+	ft_vector_init(output, vector->len + new_size);
+	ft_vector_nappend(output, vector->data, vector->len - position);
+	ft_vector_nappend(output, newdata, new_size);
+	ft_vector_nappend(output, &(vector->data[position]), vector->len - position);
+	ft_vector_free(vector);
+	vector = output;
 }

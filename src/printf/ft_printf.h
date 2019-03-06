@@ -17,9 +17,32 @@
 # include <wchar.h>
 # include <stddef.h>
 # include <stdarg.h>
-
+# include <math.h>
+# define DABS(x) (((x) < 0.0f) ? (-x) : (x))
+# define UPPER(x) ((x) == 'X' || (x)=='F' || (x)=='E' || (x)=='G' || (x)=='A')
 # define CMP(x,y)(x == y)
 
+typedef struct				s_ftoa_vars
+{
+	char					*res;
+	long double				frac;
+	int						base;
+	int						int_len;
+	int						tot_len;
+	int						neg;
+	char					tmp;
+}							t_ftoa_vars;
+typedef struct				s_fmt_str
+{
+	int						width_pad_len;
+	size_t					sign_alt;
+	int						precision_pad_len;
+	int						num_len;
+	char					pad_char;
+	int						neg;
+	char					*precision_pad;
+	char					*width_pad;
+}							t_fmt_str;
 typedef union				u_printf_val
 {
 	void					*void_ptr;
@@ -97,7 +120,6 @@ typedef struct				s_printf_args
 	char					spec;
 	va_list					arg;
 	t_printf_val			val;
-	int						neg;
 }							t_printf_args;
 
 typedef struct				s_printf
@@ -145,6 +167,12 @@ enum
 	NULL_FMT_STRING,
 	INVALID_SPEC,
 	NUM_OUT_OF_RANGE,
-}				e_printf_errors;
+}							e_printf_errors;
+
+uintmax_t					ft_pw(uintmax_t nb, uintmax_t power);
+void						reverse(char *str, int len);
+int							get_int_len(uintmax_t nbr);
+void						ft_get_float_val(t_printf *prtf);
+char						*ft_ftoa(t_printf *prtf, long double n);
 
 #endif

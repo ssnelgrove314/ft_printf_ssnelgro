@@ -5,6 +5,7 @@ CFLAGS	:=	-Wall -Wextra -Werror -I. -g
 
 SRC		:=	$(wildcard src/mem/*.c) \
 			$(wildcard src/string/*.c) \
+			$(wildcard src/list/*.c) \
 			$(wildcard src/io/*.c) \
 			$(wildcard src/math/*.c) \
 			$(wildcard src/ctype/*.c) \
