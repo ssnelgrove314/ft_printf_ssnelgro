@@ -6,7 +6,7 @@
 /*   By: ssnelgro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:36:17 by ssnelgro          #+#    #+#             */
-/*   Updated: 2019/03/04 19:36:18 by ssnelgro         ###   ########.fr       */
+/*   Updated: 2019/05/23 16:38:10 by ssnelgro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int				ft_vectorspace_init(
 	return (0);
 }
 
-void				ft_vector_ninsert(
-			t_vector *vector, char *newdata, size_t new_size, size_t position)
+void			ft_vector_ninsert(t_vector *vector, char *newdata,
+					size_t new_size, size_t position)
 {
 	t_vector		*output;
 
@@ -49,7 +49,8 @@ void				ft_vector_ninsert(
 	ft_vector_init(output, vector->len + new_size);
 	ft_vector_nappend(output, vector->data, vector->len - position);
 	ft_vector_nappend(output, newdata, new_size);
-	ft_vector_nappend(output, &(vector->data[position]), vector->len - position);
+	ft_vector_nappend(
+			output, &(vector->data[position]), vector->len - position);
 	ft_vector_free(vector);
 	vector = output;
 }

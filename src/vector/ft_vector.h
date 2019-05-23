@@ -6,7 +6,7 @@
 /*   By: ssnelgro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:02:27 by ssnelgro          #+#    #+#             */
-/*   Updated: 2019/03/04 19:34:00 by ssnelgro         ###   ########.fr       */
+/*   Updated: 2019/05/23 16:34:48 by ssnelgro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_VECTOR_H
 
 # include <stdlib.h>
+
 typedef struct		s_vector
 {
 	size_t			len;

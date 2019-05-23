@@ -6,7 +6,7 @@
 /*   By: ssnelgro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 17:53:41 by ssnelgro          #+#    #+#             */
-/*   Updated: 2019/03/04 18:23:45 by ssnelgro         ###   ########.fr       */
+/*   Updated: 2019/05/23 16:39:01 by ssnelgro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ static void		ft_format_str_finish(t_printf *prtf, t_vector *output,
 void			ft_format_str(t_printf *prtf, t_vector *output)
 {
 	t_fmt_str	*fmt;
-	//Will have to fix for negative values and padding and width
-	//process 1. get number as vector, insert padding between the negitive.
-	//If append sign flag, prepend + sign after padding
-	//if space flag and not append sign flag and not negitive, prepend space
+
 	fmt = (t_fmt_str *)ft_memalloc(sizeof(t_fmt_str));
 	fmt->sign_alt = 0;
 	fmt->neg = 0;

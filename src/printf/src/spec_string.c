@@ -6,17 +6,11 @@
 /*   By: ssnelgro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 17:50:34 by ssnelgro          #+#    #+#             */
-/*   Updated: 2019/03/04 18:22:55 by ssnelgro         ###   ########.fr       */
+/*   Updated: 2019/05/23 16:34:01 by ssnelgro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
-
-//Only deal with left/right alightment, width and precision for strings. No flags
-// void			ft_format_spec_str(t_printf *prtf, t_vector *output)
-// {
-
-// }
 
 void			spec_string(t_printf *prtf)
 {
@@ -37,7 +31,6 @@ void			spec_string(t_printf *prtf)
 		else
 			ft_vector_nappend(&output, prtf->args.val.str, length);
 		ft_format_str(prtf, &output);
-		// ft_format_spec_str(prtf, &output);
 		ft_vector_nappend(prtf->output, output.data, output.len);
 	}
 	ft_vector_free(&output);
